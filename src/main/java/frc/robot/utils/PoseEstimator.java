@@ -1,5 +1,3 @@
 package frc.robot.utils;
 
-public class PoseEstimator {
-    
-}
+public class PoseEstimator {}

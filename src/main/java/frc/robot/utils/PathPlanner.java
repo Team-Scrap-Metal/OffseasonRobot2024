@@ -1,5 +1,3 @@
 package frc.robot.utils;
 
-public class PathPlanner {
-    
-}
+public class PathPlanner {}
