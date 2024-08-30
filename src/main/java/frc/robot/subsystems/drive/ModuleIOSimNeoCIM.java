@@ -6,6 +6,10 @@ import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import frc.robot.Constants.RobotStateConstants;
 import frc.robot.subsystems.drive.DriveConstants.SimDriveConstants;
 
+
+/**
+ * Runs Simulation for an Individual Swerve Module with the Drive Motor as a Neo and the Turn Motor as a Mini CIM
+ */
 public class ModuleIOSimNeoCIM implements ModuleIO {
 
   // Declares Sim Wheels Representing Turning and Driving
@@ -18,7 +22,7 @@ public class ModuleIOSimNeoCIM implements ModuleIO {
   private double turnAppliedVolts = 0.0;
 
   public ModuleIOSimNeoCIM() {
-    System.out.println("[Init] Creating ModuleIOSimNeo");
+    System.out.println("[Init] Creating ModuleIOSimNeoCIM");
     // Builds Drive Wheel for the Neo Motor in the L2 Module
     driveSim =
         new DCMotorSim(

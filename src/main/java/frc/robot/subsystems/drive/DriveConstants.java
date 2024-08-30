@@ -37,7 +37,7 @@ public class DriveConstants {
         };
     }
 
-    public static enum L3_ABSOLUTE_ENCODER_OFFSET_RAD {
+    public static enum ABSOLUTE_ENCODER_OFFSET_RAD {
         FRONT_RIGHT(0.63), // Module 0
         FRONT_LEFT(2.363), // Module 1
         BACK_LEFT(0.09), // Module 2
@@ -45,7 +45,7 @@ public class DriveConstants {
 
         public final double OFFSET;
 
-        L3_ABSOLUTE_ENCODER_OFFSET_RAD(double value) {
+        ABSOLUTE_ENCODER_OFFSET_RAD(double value) {
             OFFSET = value;
         }
     }
