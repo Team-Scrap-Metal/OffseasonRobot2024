@@ -14,7 +14,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.RobotStateConstants;
 import frc.robot.Constants.RobotStateConstants.Mode;
+import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.DriveConstants;
+import frc.robot.subsystems.gyro.Gyro;
 
 /** This class handels the odometry and locates the robots current position */
 public class PoseEstimator extends SubsystemBase {
@@ -29,7 +31,7 @@ public class PoseEstimator extends SubsystemBase {
   private Gyro gyro;
   private Field2d field2d;
 
-  public PoseEstimator(Drive drive, Gyro gyro, Vision Vision) {
+  public PoseEstimator(Drive drive, Gyro gyro) {
 
     field2d = new Field2d();
     SmartDashboard.putData(field2d);
