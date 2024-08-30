@@ -129,23 +129,23 @@ public class DriveConstants {
          * KP represents the constant multiplied by the current error from setpoint
          * (Proportional Error)
          */
-        public static final double DRIVE_KP_NEO = 0.0;
+        public static final double NEO_KP = 0.0;
         /**
          * KI represents the constant multiplied by the total error from setpoint
          * (Integrated Error)
          */
-        public static final double DRIVE_KI_NEO = 0.0;
+        public static final double NEO_KI = 0.0;
         /**
          * KD represents the constant multiplied by the velocity error from setpoint
          * (Derived Error)
          */
-        public static final double DRIVE_KD_NEO = 0.0;
+        public static final double NEO_KD = 0.0;
 
         // Feed Forward Constants for Neo Drive
         /** KS represents the voltage required to overcome static friction */
-        public static final double DRIVE_KS_NEO = 0.4;
+        public static final double NEO_KS = 0.4;
         /** KV represents the voltage used every second per meter */
-        public static final double DRIVE_KV_NEO = 0.4;
+        public static final double NEO_KV = 0.4;
 
         // PID Constants for CIM Steer
         /**
