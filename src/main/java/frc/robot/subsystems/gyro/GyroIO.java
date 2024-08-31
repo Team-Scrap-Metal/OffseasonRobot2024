@@ -4,9 +4,8 @@
 
 package frc.robot.subsystems.gyro;
 
-import org.littletonrobotics.junction.AutoLog;
-
 import edu.wpi.first.math.geometry.Rotation2d;
+import org.littletonrobotics.junction.AutoLog;
 
 /** All the Loggable Inputs and Outputs of the Gyro in Every Mode */
 public interface GyroIO {
@@ -23,6 +22,7 @@ public interface GyroIO {
     public double pitchVelocityRadPerSec = 0.0;
     /** Gets the angular velocity of the yaw */
     public double yawVelocityRadPerSec = 0.0;
+
     public double temperatureCelcius = 0.0;
   }
 

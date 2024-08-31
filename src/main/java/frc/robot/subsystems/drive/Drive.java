@@ -4,8 +4,6 @@
 
 package frc.robot.subsystems.drive;
 
-import org.littletonrobotics.junction.Logger;
-
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -16,12 +14,11 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.Constants.RobotStateConstants;
 import frc.robot.Constants.RobotStateConstants.Mode;
 import frc.robot.subsystems.gyro.Gyro;
+import org.littletonrobotics.junction.Logger;
 
 /** This Runs the full Swerve (All Modules) for all Modes of the Robot */
 public class Drive extends SubsystemBase {

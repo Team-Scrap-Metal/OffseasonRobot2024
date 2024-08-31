@@ -1,23 +1,16 @@
 package frc.robot.subsystems.drive;
 
-import java.util.Optional;
-
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
-import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.hardware.CANcoder;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
-
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.motorcontrol.Victor;
 import frc.robot.Constants.RobotStateConstants;
 
 /** Runs an Individual Real Module with all Motors as Neos */
@@ -41,32 +34,28 @@ public class ModuleIONeoCIM implements ModuleIO {
       case 0:
         driveSparkMax =
             new CANSparkMax(DriveConstants.DRIVE_MOTOR.FRONT_RIGHT.CAN_ID, MotorType.kBrushless);
-        turnVictorSPX =
-            new WPI_VictorSPX(DriveConstants.TURN_MOTOR.FRONT_RIGHT.CAN_ID);
+        turnVictorSPX = new WPI_VictorSPX(DriveConstants.TURN_MOTOR.FRONT_RIGHT.CAN_ID);
         turnAbsoluteEncoder = new CANcoder(DriveConstants.ABSOLUTE_ENCODER.FRONT_RIGHT.ENCODER_ID);
         absoluteEncoderOffset = DriveConstants.ABSOLUTE_ENCODER_OFFSET_RAD.FRONT_RIGHT.OFFSET;
         break;
       case 1:
         driveSparkMax =
             new CANSparkMax(DriveConstants.DRIVE_MOTOR.FRONT_LEFT.CAN_ID, MotorType.kBrushless);
-        turnVictorSPX =
-            new WPI_VictorSPX(DriveConstants.TURN_MOTOR.FRONT_LEFT.CAN_ID);
+        turnVictorSPX = new WPI_VictorSPX(DriveConstants.TURN_MOTOR.FRONT_LEFT.CAN_ID);
         turnAbsoluteEncoder = new CANcoder(DriveConstants.ABSOLUTE_ENCODER.FRONT_LEFT.ENCODER_ID);
         absoluteEncoderOffset = DriveConstants.ABSOLUTE_ENCODER_OFFSET_RAD.FRONT_LEFT.OFFSET;
         break;
       case 2:
         driveSparkMax =
             new CANSparkMax(DriveConstants.DRIVE_MOTOR.BACK_LEFT.CAN_ID, MotorType.kBrushless);
-        turnVictorSPX =
-            new WPI_VictorSPX(DriveConstants.TURN_MOTOR.BACK_LEFT.CAN_ID);
+        turnVictorSPX = new WPI_VictorSPX(DriveConstants.TURN_MOTOR.BACK_LEFT.CAN_ID);
         turnAbsoluteEncoder = new CANcoder(DriveConstants.ABSOLUTE_ENCODER.BACK_LEFT.ENCODER_ID);
         absoluteEncoderOffset = DriveConstants.ABSOLUTE_ENCODER_OFFSET_RAD.BACK_LEFT.OFFSET;
         break;
       case 3:
         driveSparkMax =
             new CANSparkMax(DriveConstants.DRIVE_MOTOR.BACK_RIGHT.CAN_ID, MotorType.kBrushless);
-        turnVictorSPX =
-            new WPI_VictorSPX(DriveConstants.TURN_MOTOR.BACK_RIGHT.CAN_ID);
+        turnVictorSPX = new WPI_VictorSPX(DriveConstants.TURN_MOTOR.BACK_RIGHT.CAN_ID);
         turnAbsoluteEncoder = new CANcoder(DriveConstants.ABSOLUTE_ENCODER.BACK_RIGHT.ENCODER_ID);
         absoluteEncoderOffset = DriveConstants.ABSOLUTE_ENCODER_OFFSET_RAD.BACK_RIGHT.OFFSET;
         break;
@@ -74,12 +63,11 @@ public class ModuleIONeoCIM implements ModuleIO {
         throw new RuntimeException("Invalid module index for ModuleIOSparkMax");
     }
 
-    //Set CAN ID
+    // Set CAN ID
     driveSparkMax.setCANTimeout(RobotStateConstants.CAN_CONFIG_TIMEOUT_SEC);
     turnVictorSPX.setExpiration(RobotStateConstants.CAN_CONFIG_TIMEOUT_SEC);
-    
 
-    //Connects Drive Motor and Drive Encoder
+    // Connects Drive Motor and Drive Encoder
     driveRelativeEncoder = driveSparkMax.getEncoder();
 
     /** For each drive motor, update values */

@@ -5,7 +5,6 @@
 package frc.robot.subsystems.gyro;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
-
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
 
@@ -22,24 +21,35 @@ public class GyroIOPigeon implements GyroIO {
 
   @Override
   public void updateInputs(GyroIOInputs inputs) {
-    inputs.rollPositionRad = new Rotation2d(Units.degreesToRadians(gyro.getRoll().getValueAsDouble()));
-    inputs.pitchPositionRad = new Rotation2d(Units.degreesToRadians(gyro.getPitch().getValueAsDouble()));
+    inputs.rollPositionRad =
+        new Rotation2d(Units.degreesToRadians(gyro.getRoll().getValueAsDouble()));
+    inputs.pitchPositionRad =
+        new Rotation2d(Units.degreesToRadians(gyro.getPitch().getValueAsDouble()));
     // Value is Negative because NavX reads CW and everything else runs CCW
     inputs.yawPositionRad =
         new Rotation2d(
-            Units.degreesToRadians(gyro.getYaw().getValueAsDouble() + GyroConstants.HEADING_OFFSET_DEGREES));
-    inputs.anglePositionRad = new Rotation2d(Units.degreesToRadians(gyro.getAngle() + GyroConstants.HEADING_OFFSET_DEGREES));
+            Units.degreesToRadians(
+                gyro.getYaw().getValueAsDouble() + GyroConstants.HEADING_OFFSET_DEGREES));
+    inputs.anglePositionRad =
+        new Rotation2d(
+            Units.degreesToRadians(gyro.getAngle() + GyroConstants.HEADING_OFFSET_DEGREES));
     inputs.rollVelocityRadPerSec =
         Units.degreesToRadians(
-            gyro.getAngularVelocityYDevice().getValueAsDouble()); // Gets the angular velocity, in degrees per second, of the roll
+            gyro.getAngularVelocityYDevice()
+                .getValueAsDouble()); // Gets the angular velocity, in degrees per second, of the
+    // roll
     // and converts it to radians per second
     inputs.pitchVelocityRadPerSec =
         Units.degreesToRadians(
-            gyro.getAngularVelocityXDevice().getValueAsDouble()); // Gets the angular velocity, in degrees per second, of the pitch
+            gyro.getAngularVelocityXDevice()
+                .getValueAsDouble()); // Gets the angular velocity, in degrees per second, of the
+    // pitch
     // and converts it to radians per second
     inputs.yawVelocityRadPerSec =
         Units.degreesToRadians(
-            gyro.getAngularVelocityZDevice().getValueAsDouble()); // Gets the angular velocity, in degrees per second, of the yaw and
+            gyro.getAngularVelocityZDevice()
+                .getValueAsDouble()); // Gets the angular velocity, in degrees per second, of the
+    // yaw and
     // converts it to radians per second
 
     inputs.temperatureCelcius = gyro.getTemperature().getValueAsDouble();

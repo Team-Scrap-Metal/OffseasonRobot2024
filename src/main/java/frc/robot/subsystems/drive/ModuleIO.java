@@ -1,6 +1,5 @@
 package frc.robot.subsystems.drive;
 
-import java.util.Optional;
 import org.littletonrobotics.junction.AutoLog;
 
 /** All the Loggable Inputs and Outputs of Each Individual Module */

@@ -75,7 +75,7 @@ public class RobotContainer {
 
       default:
         // Replayed robot, disable IO implementations
-                m_gyroSubsystem = new Gyro(new GyroIO() {});
+        m_gyroSubsystem = new Gyro(new GyroIO() {});
         m_driveSubsystem =
             new Drive(
                 new ModuleIO() {},
@@ -97,7 +97,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-        /** Driver Controls */
+    /** Driver Controls */
 
     // Driving the robot
     m_driveSubsystem.setDefaultCommand(

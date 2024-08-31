@@ -6,9 +6,9 @@ import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import frc.robot.Constants.RobotStateConstants;
 import frc.robot.subsystems.drive.DriveConstants.SimDriveConstants;
 
-
 /**
- * Runs Simulation for an Individual Swerve Module with the Drive Motor as a Neo and the Turn Motor as a Mini CIM
+ * Runs Simulation for an Individual Swerve Module with the Drive Motor as a Neo and the Turn Motor
+ * as a Mini CIM
  */
 public class ModuleIOSimNeoCIM implements ModuleIO {
 
@@ -33,7 +33,7 @@ public class ModuleIOSimNeoCIM implements ModuleIO {
         new DCMotorSim(
             DCMotor.getMiniCIM(1), DriveConstants.GEAR_RATIO, SimDriveConstants.STEER_MOI_KG_M2);
   }
-  
+
   @Override
   public void updateInputs(ModuleIOInputs inputs) {
     driveSim.update(RobotStateConstants.LOOP_PERIODIC_SEC);
@@ -89,5 +89,4 @@ public class ModuleIOSimNeoCIM implements ModuleIO {
     turnAppliedVolts = MathUtil.clamp(volts, -12.0, 12.0);
     turnSim.setInputVoltage(turnAppliedVolts);
   }
-
 }
