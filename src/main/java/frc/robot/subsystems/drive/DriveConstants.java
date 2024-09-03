@@ -148,9 +148,9 @@ public class DriveConstants {
     /**
      * KP represents the constant multiplied by the current error from setpoint (Proportional Error)
      */
-    public static final double CIM_KP = 0.82; // TODO: Update
+    public static final double CIM_KP = 0.62; // TODO: Update
     /** KI represents the constant multiplied by the total error from setpoint (Integrated Error) */
-    public static final double CIM_KI = 0.245; // TODO: Update
+    public static final double CIM_KI = 0.4; // TODO: Update
     /** KD represents the constant multiplied by the velocity error from setpoint (Derived Error) */
     public static final double CIM_KD = 0.12; // TODO: Update
 
