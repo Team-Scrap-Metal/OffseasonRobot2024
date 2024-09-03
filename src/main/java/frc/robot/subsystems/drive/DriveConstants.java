@@ -74,7 +74,7 @@ public class DriveConstants {
   /**
    * Within 10% of the desired direction, the joystick is considered to be going in that direction
    */
-  public static final double DEADBAND = 0.1;
+  public static final double DEADBAND = 0.05;
 
   /**
    * CAN IDs for motors and encoders /* 1-4: Absolute Encoders, 5-8: Drive Motors, 9-12: Steer
@@ -148,11 +148,11 @@ public class DriveConstants {
     /**
      * KP represents the constant multiplied by the current error from setpoint (Proportional Error)
      */
-    public static final double CIM_KP = 0.65; // TODO: Update
+    public static final double CIM_KP = 0.82; // TODO: Update
     /** KI represents the constant multiplied by the total error from setpoint (Integrated Error) */
-    public static final double CIM_KI = 0.2; // TODO: Update
+    public static final double CIM_KI = 0.245; // TODO: Update
     /** KD represents the constant multiplied by the velocity error from setpoint (Derived Error) */
-    public static final double CIM_KD = 0.00; // TODO: Update
+    public static final double CIM_KD = 0.12; // TODO: Update
 
     /** Set the inverted for the drive SPARKMAX */
     public static final boolean INVERT_SPARK_MAX = true;
