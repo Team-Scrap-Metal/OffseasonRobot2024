@@ -28,6 +28,7 @@ import frc.robot.subsystems.drive.ModuleIOSimNeoCIM;
 import frc.robot.subsystems.gyro.Gyro;
 import frc.robot.subsystems.gyro.GyroIO;
 import frc.robot.subsystems.gyro.GyroIOPigeon;
+import frc.robot.utils.PoseEstimator;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -39,6 +40,7 @@ public class RobotContainer {
   // Subsystems
   private final Drive m_driveSubsystem;
   private final Gyro m_gyroSubsystem;
+  private final PoseEstimator m_poseEstimator;
   // Controller
   private final CommandXboxController driverController =
       new CommandXboxController(OperatorConstants.DRIVER_PORT);
@@ -59,6 +61,7 @@ public class RobotContainer {
                 new ModuleIONeoCIM(2),
                 new ModuleIONeoCIM(3),
                 m_gyroSubsystem);
+
         break;
 
       case SIM:
@@ -86,6 +89,7 @@ public class RobotContainer {
         break;
     }
 
+    m_poseEstimator = new PoseEstimator(m_driveSubsystem, m_gyroSubsystem);
     // Configure the button bindings
     configureButtonBindings();
   }
