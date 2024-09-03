@@ -6,7 +6,7 @@ package frc.robot.subsystems.gyro;
 
 public class GyroConstants {
   /** Sets the offset of the heading so that the Intake side is the front of the robot */
-  public static final double HEADING_OFFSET_DEGREES = -15;
+  public static final double HEADING_OFFSET_DEGREES = -45;
 
   /**
    * CAN IDs for motors and encoders /* 1-4: Absolute Encoders, 5-8: Drive Motors, 9-12: Steer

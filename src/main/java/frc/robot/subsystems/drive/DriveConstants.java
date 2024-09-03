@@ -45,10 +45,10 @@ public class DriveConstants {
   }
 
   public static enum ABSOLUTE_ENCODER_OFFSET_RAD {
-    FRONT_RIGHT(0.256), // Module 0 //TODO: Update
-    FRONT_LEFT(-0.322), // Module 1 //TODO: Update
-    BACK_LEFT(-0.291), // Module 2 //TODO: Update
-    BACK_RIGHT(0.782); // Module 3 //TODO: Update
+    FRONT_RIGHT(0.245), // Module 0 //TODO: Update
+    FRONT_LEFT(-0.318), // Module 1 //TODO: Update
+    BACK_LEFT(-0.261), // Module 2 //TODO: Update
+    BACK_RIGHT(0.598); // Module 3 //TODO: Update
 
     public final double OFFSET;
 
@@ -148,11 +148,11 @@ public class DriveConstants {
     /**
      * KP represents the constant multiplied by the current error from setpoint (Proportional Error)
      */
-    public static final double CIM_KP = 0.62; // TODO: Update
+    public static final double CIM_KP = 2.4; // TODO: Update
     /** KI represents the constant multiplied by the total error from setpoint (Integrated Error) */
-    public static final double CIM_KI = 0.4; // TODO: Update
+    public static final double CIM_KI = 0.6; // TODO: Update
     /** KD represents the constant multiplied by the velocity error from setpoint (Derived Error) */
-    public static final double CIM_KD = 0.12; // TODO: Update
+    public static final double CIM_KD = 0.35; // TODO: Update
 
     /** Set the inverted for the drive SPARKMAX */
     public static final boolean INVERT_SPARK_MAX = true;
