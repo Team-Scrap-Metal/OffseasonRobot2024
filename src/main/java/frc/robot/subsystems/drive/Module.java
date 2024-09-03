@@ -1,6 +1,5 @@
 package frc.robot.subsystems.drive;
 
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -84,7 +83,7 @@ public class Module {
   /** Returns the current turn angle of the module. */
   public Rotation2d getAngle() {
     // Angle Modulus sets the Value Returned to be on a -pi, pi scale
-    return new Rotation2d(MathUtil.angleModulus(inputs.turnAbsolutePositionRad));
+    return new Rotation2d(inputs.turnAbsolutePositionRad);
   }
 
   /** Returns the current drive position of the module in meters. */
