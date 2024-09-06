@@ -88,6 +88,10 @@ public class ModuleIONeoCIM implements ModuleIO {
       turnVictorSPX.setSelectedSensorPosition(0);
     }
 
+    // Initializes motors in brake mode
+    driveSparkMax.setIdleMode(IdleMode.kBrake);
+    turnVictorSPX.setNeutralMode(NeutralMode.Brake);
+
     // ensure configs remain after power cycles
     driveSparkMax.burnFlash();
   }

@@ -108,10 +108,10 @@ public class RobotContainer {
         new RunCommand(
             () ->
                 m_driveSubsystem.driveWithDeadband(
-                    driverController.getLeftX(), // Forward/backward
-                    -driverController
-                        .getLeftY(), // Left/Right (multiply by -1 bc controller axis is inverted)
-                    driverController.getRightX()), // Rotate chassis left/right
+                    driverController.getLeftX() * 0.5, // Forward/backward
+                    -driverController.getLeftY()
+                        * 0.5, // Left/Right (multiply by -1 bc controller axis is inverted)
+                    driverController.getRightX() * (0.25)), // Rotate chassis left/right
             m_driveSubsystem));
 
     // Resets robot heading to be wherever the front of the robot is facing
