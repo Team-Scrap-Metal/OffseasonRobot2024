@@ -74,7 +74,7 @@ public class DriveConstants {
   /**
    * Within 10% of the desired direction, the joystick is considered to be going in that direction
    */
-  public static final double DEADBAND = 0.05;
+  public static final double DEADBAND = 0.02;
 
   /**
    * CAN IDs for motors and encoders /* 1-4: Absolute Encoders, 5-8: Drive Motors, 9-12: Steer
