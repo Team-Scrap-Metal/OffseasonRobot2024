@@ -16,9 +16,19 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.RobotStateConstants;
+import frc.robot.subsystems.drive.Drive;
+import frc.robot.subsystems.drive.ModuleIO;
+import frc.robot.subsystems.drive.ModuleIONeoCIM;
+import frc.robot.subsystems.drive.ModuleIOSimNeoCIM;
+import frc.robot.subsystems.gyro.Gyro;
+import frc.robot.subsystems.gyro.GyroIO;
+import frc.robot.subsystems.gyro.GyroIOPigeon;
+import frc.robot.utils.PoseEstimator;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -28,7 +38,9 @@ import frc.robot.Constants.RobotStateConstants;
  */
 public class RobotContainer {
   // Subsystems
-
+  private final Drive m_driveSubsystem;
+  private final Gyro m_gyroSubsystem;
+  private final PoseEstimator m_poseEstimator;
   // Controller
   private final CommandXboxController driverController =
       new CommandXboxController(OperatorConstants.DRIVER_PORT);
@@ -41,17 +53,43 @@ public class RobotContainer {
     switch (RobotStateConstants.getMode()) {
       case REAL:
         // Real robot, instantiate hardware IO implementations
+        m_gyroSubsystem = new Gyro(new GyroIOPigeon());
+        m_driveSubsystem =
+            new Drive(
+                new ModuleIONeoCIM(0),
+                new ModuleIONeoCIM(1),
+                new ModuleIONeoCIM(2),
+                new ModuleIONeoCIM(3),
+                m_gyroSubsystem);
+
         break;
 
       case SIM:
         // Sim robot, instantiate physics sim IO implementations
+        m_gyroSubsystem = new Gyro(new GyroIO() {});
+        m_driveSubsystem =
+            new Drive(
+                new ModuleIOSimNeoCIM(),
+                new ModuleIOSimNeoCIM(),
+                new ModuleIOSimNeoCIM(),
+                new ModuleIOSimNeoCIM(),
+                m_gyroSubsystem);
         break;
 
       default:
         // Replayed robot, disable IO implementations
+        m_gyroSubsystem = new Gyro(new GyroIO() {});
+        m_driveSubsystem =
+            new Drive(
+                new ModuleIO() {},
+                new ModuleIO() {},
+                new ModuleIO() {},
+                new ModuleIO() {},
+                m_gyroSubsystem);
         break;
     }
 
+    m_poseEstimator = new PoseEstimator(m_driveSubsystem, m_gyroSubsystem);
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -62,7 +100,25 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+    /** Driver Controls */
+
+    // Driving the robot
+    m_driveSubsystem.setDefaultCommand(
+        new RunCommand(
+            () ->
+                m_driveSubsystem.driveWithDeadband(
+                    driverController.getLeftX() * 0.25, // Forward/backward
+                    -driverController.getLeftY()
+                        * 0.25, // Left/Right (multiply by -1 bc controller axis is inverted)
+                    driverController.getRightX() * (0.25)), // Rotate chassis left/right
+            m_driveSubsystem));
+
+    // Resets robot heading to be wherever the front of the robot is facing
+    driverController
+        .a()
+        .onTrue(new InstantCommand(() -> m_driveSubsystem.updateHeading(), m_driveSubsystem));
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

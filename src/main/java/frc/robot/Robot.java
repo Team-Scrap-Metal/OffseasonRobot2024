@@ -13,11 +13,11 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants.RobotStateConstants;
 import org.littletonrobotics.junction.LogFileUtil;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
-import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
@@ -29,16 +29,13 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;
  * project.
  */
 public class Robot extends LoggedRobot {
-  private static final String defaultAuto = "Default";
-  private static final String customAuto = "My Auto";
-  private String autoSelected;
-  private final LoggedDashboardChooser<String> chooser =
-      new LoggedDashboardChooser<>("Auto Choices");
 
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
+  private RobotContainer m_robotContainer;
+
   @Override
   public void robotInit() {
     // Record metadata
@@ -87,35 +84,24 @@ public class Robot extends LoggedRobot {
     // Start AdvantageKit logger
     Logger.start();
 
-    // Initialize auto chooser
-    chooser.addDefaultOption("Default Auto", defaultAuto);
-    chooser.addOption("My Auto", customAuto);
+    // Instantiate our RobotContainer. This will perform all our button bindings,
+    // and put our autonomous chooser on the dashboard.
+    m_robotContainer = new RobotContainer();
   }
 
   /** This function is called periodically during all modes. */
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic() {
+    CommandScheduler.getInstance().run();
+  }
 
   /** This function is called once when autonomous is enabled. */
   @Override
-  public void autonomousInit() {
-    autoSelected = chooser.get();
-    System.out.println("Auto selected: " + autoSelected);
-  }
+  public void autonomousInit() {}
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {
-    switch (autoSelected) {
-      case customAuto:
-        // Put custom auto code here
-        break;
-      case defaultAuto:
-      default:
-        // Put default auto code here
-        break;
-    }
-  }
+  public void autonomousPeriodic() {}
 
   /** This function is called once when teleop is enabled. */
   @Override
