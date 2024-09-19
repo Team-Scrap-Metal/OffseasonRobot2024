@@ -23,6 +23,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.RobotStateConstants;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.ModuleIO;
+import frc.robot.subsystems.drive.ModuleIOKrakenNeo;
 import frc.robot.subsystems.drive.ModuleIONeoCIM;
 import frc.robot.subsystems.drive.ModuleIOSimNeoCIM;
 import frc.robot.subsystems.gyro.Gyro;
@@ -56,10 +57,10 @@ public class RobotContainer {
         m_gyroSubsystem = new Gyro(new GyroIOPigeon());
         m_driveSubsystem =
             new Drive(
-                new ModuleIONeoCIM(0),
-                new ModuleIONeoCIM(1),
-                new ModuleIONeoCIM(2),
-                new ModuleIONeoCIM(3),
+                new ModuleIOKrakenNeo(0),
+                new ModuleIOKrakenNeo(1),
+                new ModuleIOKrakenNeo(2),
+                new ModuleIOKrakenNeo(3),
                 m_gyroSubsystem);
 
         break;
