@@ -138,17 +138,40 @@ public class RobotContainer {
         .a()
         .onTrue(new InstantCommand(() -> m_driveSubsystem.updateHeading(), m_driveSubsystem));
 
-    driverController.leftBumper().onTrue(new InstantCommand(()-> m_intakeSubsystem.setIntakePercent(0.5), m_intakeSubsystem)).onFalse(new InstantCommand(()-> m_intakeSubsystem.setIntakeVoltage(0), m_intakeSubsystem));
-    driverController.rightBumper().onTrue(new InstantCommand(()-> m_intakeSubsystem.setIntakePercent(-0.5), m_intakeSubsystem)).onFalse(new InstantCommand(()-> m_intakeSubsystem.setIntakeVoltage(0), m_intakeSubsystem));
-
+    driverController
+        .leftBumper()
+        .onTrue(
+            new InstantCommand(() -> m_intakeSubsystem.setIntakePercent(0.5), m_intakeSubsystem))
+        .onFalse(
+            new InstantCommand(() -> m_intakeSubsystem.setIntakeVoltage(0), m_intakeSubsystem));
+    driverController
+        .rightBumper()
+        .onTrue(
+            new InstantCommand(() -> m_intakeSubsystem.setIntakePercent(-0.5), m_intakeSubsystem))
+        .onFalse(
+            new InstantCommand(() -> m_intakeSubsystem.setIntakeVoltage(0), m_intakeSubsystem));
   }
 
-  private void configureAuxButtonBindings(){
-    /**Aux Controls */
-    auxController.leftBumper().onTrue(new InstantCommand(()-> m_intakeSubsystem.setIntakePercent(0.5), m_intakeSubsystem)).onFalse(new InstantCommand(()-> m_intakeSubsystem.setIntakeVoltage(0), m_intakeSubsystem));
-    auxController.rightBumper().onTrue(new InstantCommand(()-> m_intakeSubsystem.setIntakePercent(-0.5), m_intakeSubsystem)).onFalse(new InstantCommand(()-> m_intakeSubsystem.setIntakeVoltage(0), m_intakeSubsystem));
+  private void configureAuxButtonBindings() {
+    /** Aux Controls */
+    auxController
+        .leftBumper()
+        .onTrue(
+            new InstantCommand(() -> m_intakeSubsystem.setIntakePercent(0.5), m_intakeSubsystem))
+        .onFalse(
+            new InstantCommand(() -> m_intakeSubsystem.setIntakeVoltage(0), m_intakeSubsystem));
+    auxController
+        .rightBumper()
+        .onTrue(
+            new InstantCommand(() -> m_intakeSubsystem.setIntakePercent(-0.5), m_intakeSubsystem))
+        .onFalse(
+            new InstantCommand(() -> m_intakeSubsystem.setIntakeVoltage(0), m_intakeSubsystem));
 
-    auxController.leftTrigger().onTrue(new InstantCommand(()-> m_shooterSubsystem.setLeftShooterVoltage(3), m_shooterSubsystem)).onFalse(new InstantCommand(()-> m_shooterSubsystem.setLeftShooterVoltage(0), m_shooterSubsystem));
+    auxController
+        .leftTrigger()
+        .onTrue(new InstantCommand(() -> m_shooterSubsystem.setBothVoltage(3), m_shooterSubsystem))
+        .onFalse(
+            new InstantCommand(() -> m_shooterSubsystem.setBothVoltage(0), m_shooterSubsystem));
   }
 
   /**

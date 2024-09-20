@@ -72,7 +72,7 @@ public final class Constants {
     public static final int AUX_PORT = 1;
   }
 
-  public final class UnitConversions{
+  public final class UnitConversions {
     public static final double MIN_TO_MS = 60000;
   }
 }
