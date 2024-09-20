@@ -2,6 +2,7 @@ package frc.robot.subsystems.shooter;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.RobotStateConstants;
 import org.littletonrobotics.junction.Logger;
 
 public class Shooter extends SubsystemBase {
@@ -28,17 +29,15 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
     this.updateInputs();
-    Logger.processInputs("Intake", inputs);
-    // setLeftShooterVoltage(
-    //     // (leftPID.getSetpoint() +
-    //     leftPID.calculate(this.getLeftVelocityRPM())
-    //     // ) * RobotStateConstants.BATTERY_VOLTAGE / 6000
-    //     );
-    // setRightShooterVoltage(
-    //     // (rightPID.getSetpoint() +
-    //     rightPID.calculate(this.getLeftVelocityRPM())
-    //     // ) * RobotStateConstants.BATTERY_VOLTAGE / 6000
-    //     );
+    Logger.processInputs("Shooter", inputs);
+    setLeftShooterVoltage(
+        (leftPID.getSetpoint() + leftPID.calculate(this.getLeftVelocityRPM()))
+            * RobotStateConstants.BATTERY_VOLTAGE
+            / 5300);
+    setRightShooterVoltage(
+        (rightPID.getSetpoint() + rightPID.calculate(this.getLeftVelocityRPM()))
+            * RobotStateConstants.BATTERY_VOLTAGE
+            / 5300);
   }
   /**
    * Update inputs without running the rest of the periodic logic. This is useful since these
@@ -75,6 +74,10 @@ public class Shooter extends SubsystemBase {
 
   public void setRightSetpoint(double setpoint) {
     leftPID.setSetpoint(setpoint);
+  }
+
+  public void setBothSetpoint(double leftSetpoint, double setRightSetpoint){
+    
   }
 
   public void stopAll() {

@@ -11,7 +11,7 @@ public class ShooterConstants {
 
   public static final int CURR_LIM_A = 30;
 
-  public static final double kP = 0.0;
+  public static final double kP = 0.001;
   public static final double kI = 0.0;
   public static final double kD = 0.0;
 
