@@ -6,7 +6,6 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.robot.subsystems.drive.DriveConstants.KrakenNEOModule;
-import frc.robot.subsystems.drive.DriveConstants.NeoCIMModule;
 import org.littletonrobotics.junction.Logger;
 
 /** This Runs Each Individual Module of a Swerve Drive for all Modes of the Robot */
@@ -30,13 +29,17 @@ public class Module {
     this.index = index;
 
     // update drive pid values depending on neo or kraken
-    drivePID = new PIDController(KrakenNEOModule.KRAKEN_KP, KrakenNEOModule.KRAKEN_KI, KrakenNEOModule.KRAKEN_KD);
+    drivePID =
+        new PIDController(
+            KrakenNEOModule.KRAKEN_KP, KrakenNEOModule.KRAKEN_KI, KrakenNEOModule.KRAKEN_KD);
 
     // update drive ff values depending on neo or kraken
-    driveFeedforward = new SimpleMotorFeedforward(KrakenNEOModule.KRAKEN_KS, KrakenNEOModule.KRAKEN_KV);
+    driveFeedforward =
+        new SimpleMotorFeedforward(KrakenNEOModule.KRAKEN_KS, KrakenNEOModule.KRAKEN_KV);
 
     // fill steer pid values
-    steerPID = new PIDController(KrakenNEOModule.NEO_KP, KrakenNEOModule.NEO_KI, KrakenNEOModule.NEO_KD);
+    steerPID =
+        new PIDController(KrakenNEOModule.NEO_KP, KrakenNEOModule.NEO_KI, KrakenNEOModule.NEO_KD);
 
     steerPID.enableContinuousInput(-Math.PI, Math.PI);
   }

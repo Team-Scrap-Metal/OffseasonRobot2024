@@ -24,7 +24,6 @@ import frc.robot.Constants.RobotStateConstants;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOKrakenNeo;
-import frc.robot.subsystems.drive.ModuleIONeoCIM;
 import frc.robot.subsystems.drive.ModuleIOSimNeoCIM;
 import frc.robot.subsystems.gyro.Gyro;
 import frc.robot.subsystems.gyro.GyroIO;
