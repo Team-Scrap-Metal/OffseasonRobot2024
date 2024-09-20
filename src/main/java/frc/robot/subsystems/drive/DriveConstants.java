@@ -180,11 +180,11 @@ public class DriveConstants {
     /**
      * KP represents the constant multiplied by the current error from setpoint (Proportional Error)
      */
-    public static final double NEO_KP = 6.4;
+    public static final double NEO_KP = 0.0;
     /** KI represents the constant multiplied by the total error from setpoint (Integrated Error) */
-    public static final double NEO_KI = 1.2;
+    public static final double NEO_KI = 0.0;
     /** KD represents the constant multiplied by the velocity error from setpoint (Derived Error) */
-    public static final double NEO_KD = 0.03;
+    public static final double NEO_KD = 0.0;
 
     /** Set the inverted for the drive TalonFX */
     public static final boolean INVERT_TALONFX = false;

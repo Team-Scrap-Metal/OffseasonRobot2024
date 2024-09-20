@@ -32,16 +32,16 @@ public class Shooter extends SubsystemBase{
     public void periodic() {
     this.updateInputs();
     Logger.processInputs("Intake", inputs);
-    setLeftShooterVoltage(
-        // (leftPID.getSetpoint() + 
-        leftPID.calculate(this.getLeftVelocityRPM())
-        // ) * RobotStateConstants.BATTERY_VOLTAGE / 6000
-        );
-    setRightShooterVoltage(
-        // (rightPID.getSetpoint() + 
-        rightPID.calculate(this.getLeftVelocityRPM())
-        // ) * RobotStateConstants.BATTERY_VOLTAGE / 6000
-        );
+    // setLeftShooterVoltage(
+    //     // (leftPID.getSetpoint() + 
+    //     leftPID.calculate(this.getLeftVelocityRPM())
+    //     // ) * RobotStateConstants.BATTERY_VOLTAGE / 6000
+    //     );
+    // setRightShooterVoltage(
+    //     // (rightPID.getSetpoint() + 
+    //     rightPID.calculate(this.getLeftVelocityRPM())
+    //     // ) * RobotStateConstants.BATTERY_VOLTAGE / 6000
+    //     );
   }
     /**
    * Update inputs without running the rest of the periodic logic. This is useful since these

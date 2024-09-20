@@ -28,6 +28,12 @@ import frc.robot.subsystems.drive.ModuleIOSimNeoCIM;
 import frc.robot.subsystems.gyro.Gyro;
 import frc.robot.subsystems.gyro.GyroIO;
 import frc.robot.subsystems.gyro.GyroIOPigeon;
+import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.intake.IntakeIO;
+import frc.robot.subsystems.intake.IntakeIOCIM;
+import frc.robot.subsystems.shooter.Shooter;
+import frc.robot.subsystems.shooter.ShooterIO;
+import frc.robot.subsystems.shooter.ShooterIONEO;
 import frc.robot.utils.PoseEstimator;
 
 /**
@@ -40,10 +46,14 @@ public class RobotContainer {
   // Subsystems
   private final Drive m_driveSubsystem;
   private final Gyro m_gyroSubsystem;
+  private final Shooter m_shooterSubsystem;
+  private final Intake m_intakeSubsystem;
   private final PoseEstimator m_poseEstimator;
   // Controller
   private final CommandXboxController driverController =
       new CommandXboxController(OperatorConstants.DRIVER_PORT);
+  private final CommandXboxController auxController =
+      new CommandXboxController(OperatorConstants.AUX_PORT);
 
   // Dashboard inputs
   // private final LoggedDashboardChooser<Command> autoChooser;
@@ -61,6 +71,8 @@ public class RobotContainer {
                 new ModuleIOKrakenNeo(2),
                 new ModuleIOKrakenNeo(3),
                 m_gyroSubsystem);
+        m_shooterSubsystem = new Shooter(new ShooterIONEO());
+        m_intakeSubsystem = new Intake(new IntakeIOCIM());
 
         break;
 
@@ -74,6 +86,9 @@ public class RobotContainer {
                 new ModuleIOSimNeoCIM(),
                 new ModuleIOSimNeoCIM(),
                 m_gyroSubsystem);
+
+        m_shooterSubsystem = new Shooter(new ShooterIO() {});
+        m_intakeSubsystem = new Intake(new IntakeIO() {});
         break;
 
       default:
@@ -86,12 +101,16 @@ public class RobotContainer {
                 new ModuleIO() {},
                 new ModuleIO() {},
                 m_gyroSubsystem);
+
+        m_shooterSubsystem = new Shooter(new ShooterIO() {});
+        m_intakeSubsystem = new Intake(new IntakeIO() {});
         break;
     }
 
     m_poseEstimator = new PoseEstimator(m_driveSubsystem, m_gyroSubsystem);
     // Configure the button bindings
-    configureButtonBindings();
+    configureDriverButtonBindings();
+    configureAuxButtonBindings();
   }
 
   /**
@@ -100,7 +119,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {
+  private void configureDriverButtonBindings() {
     /** Driver Controls */
 
     // Driving the robot
@@ -118,6 +137,18 @@ public class RobotContainer {
     driverController
         .a()
         .onTrue(new InstantCommand(() -> m_driveSubsystem.updateHeading(), m_driveSubsystem));
+
+    driverController.leftBumper().onTrue(new InstantCommand(()-> m_intakeSubsystem.setIntakePercent(0.5), m_intakeSubsystem)).onFalse(new InstantCommand(()-> m_intakeSubsystem.setIntakeVoltage(0), m_intakeSubsystem));
+    driverController.rightBumper().onTrue(new InstantCommand(()-> m_intakeSubsystem.setIntakePercent(-0.5), m_intakeSubsystem)).onFalse(new InstantCommand(()-> m_intakeSubsystem.setIntakeVoltage(0), m_intakeSubsystem));
+
+  }
+
+  private void configureAuxButtonBindings(){
+    /**Aux Controls */
+    auxController.leftBumper().onTrue(new InstantCommand(()-> m_intakeSubsystem.setIntakePercent(0.5), m_intakeSubsystem)).onFalse(new InstantCommand(()-> m_intakeSubsystem.setIntakeVoltage(0), m_intakeSubsystem));
+    auxController.rightBumper().onTrue(new InstantCommand(()-> m_intakeSubsystem.setIntakePercent(-0.5), m_intakeSubsystem)).onFalse(new InstantCommand(()-> m_intakeSubsystem.setIntakeVoltage(0), m_intakeSubsystem));
+
+    auxController.leftTrigger().onTrue(new InstantCommand(()-> m_shooterSubsystem.setLeftShooterVoltage(3), m_shooterSubsystem)).onFalse(new InstantCommand(()-> m_shooterSubsystem.setLeftShooterVoltage(0), m_shooterSubsystem));
   }
 
   /**
