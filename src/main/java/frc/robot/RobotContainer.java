@@ -170,9 +170,10 @@ public class RobotContainer {
     auxController
         .leftTrigger()
         .onTrue(
-            new InstantCommand(() -> m_shooterSubsystem.setLeftSetpoint(3000), m_shooterSubsystem))
+            new InstantCommand(
+                () -> m_shooterSubsystem.setBothSetpoint(3000, 4000), m_shooterSubsystem))
         .onFalse(
-            new InstantCommand(() -> m_shooterSubsystem.setLeftSetpoint(0), m_shooterSubsystem));
+            new InstantCommand(() -> m_shooterSubsystem.setBothSetpoint(0, 0), m_shooterSubsystem));
   }
 
   /**

@@ -76,8 +76,9 @@ public class Shooter extends SubsystemBase {
     leftPID.setSetpoint(setpoint);
   }
 
-  public void setBothSetpoint(double leftSetpoint, double setRightSetpoint){
-    
+  public void setBothSetpoint(double leftSetpoint, double rightSetpoint) {
+    leftPID.setSetpoint(leftSetpoint);
+    rightPID.setSetpoint(rightSetpoint);
   }
 
   public void stopAll() {
