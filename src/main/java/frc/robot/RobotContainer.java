@@ -139,13 +139,13 @@ public class RobotContainer {
         .onTrue(new InstantCommand(() -> m_driveSubsystem.updateHeading(), m_driveSubsystem));
 
     driverController
-        .leftBumper()
+        .leftTrigger()
         .onTrue(
             new InstantCommand(() -> m_intakeSubsystem.setIntakePercent(0.5), m_intakeSubsystem))
         .onFalse(
             new InstantCommand(() -> m_intakeSubsystem.setIntakeVoltage(0), m_intakeSubsystem));
     driverController
-        .rightBumper()
+        .rightTrigger()
         .onTrue(
             new InstantCommand(() -> m_intakeSubsystem.setIntakePercent(-0.5), m_intakeSubsystem))
         .onFalse(
@@ -155,13 +155,13 @@ public class RobotContainer {
   private void configureAuxButtonBindings() {
     /** Aux Controls */
     auxController
-        .leftBumper()
+        .rightBumper()
         .onTrue(
-            new InstantCommand(() -> m_intakeSubsystem.setIntakePercent(0.5), m_intakeSubsystem))
+            new InstantCommand(() -> m_intakeSubsystem.setIntakePercent(1.0), m_intakeSubsystem))
         .onFalse(
             new InstantCommand(() -> m_intakeSubsystem.setIntakeVoltage(0), m_intakeSubsystem));
     auxController
-        .rightBumper()
+        .leftBumper()
         .onTrue(
             new InstantCommand(() -> m_intakeSubsystem.setIntakePercent(-0.5), m_intakeSubsystem))
         .onFalse(
