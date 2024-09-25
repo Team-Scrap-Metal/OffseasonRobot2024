@@ -13,6 +13,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants.RobotStateConstants;
 import org.littletonrobotics.junction.LogFileUtil;
@@ -34,6 +35,8 @@ public class Robot extends LoggedRobot {
    * initialization code.
    */
   private RobotContainer m_robotContainer;
+
+  private Command autonomousCommand;
 
   @Override
   public void robotInit() {
@@ -96,7 +99,13 @@ public class Robot extends LoggedRobot {
 
   /** This function is called once when autonomous is enabled. */
   @Override
-  public void autonomousInit() {}
+  public void autonomousInit() {
+    autonomousCommand = m_robotContainer.getAutonomousCommand();
+
+    if (autonomousCommand != null) {
+      autonomousCommand.schedule();
+    }
+  }
 
   /** This function is called periodically during autonomous. */
   @Override
@@ -104,7 +113,9 @@ public class Robot extends LoggedRobot {
 
   /** This function is called once when teleop is enabled. */
   @Override
-  public void teleopInit() {}
+  public void teleopInit() {
+    m_robotContainer.stopEverything();
+  }
 
   /** This function is called periodically during operator control. */
   @Override

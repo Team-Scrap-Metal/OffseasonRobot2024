@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.RobotStateConstants;
+import frc.robot.commands.AutoCommands.shootAuto;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOKrakenNeo;
@@ -141,15 +142,15 @@ public class RobotContainer {
     driverController
         .leftTrigger()
         .onTrue(
-            new InstantCommand(() -> m_intakeSubsystem.setIntakePercent(0.5), m_intakeSubsystem))
+            new InstantCommand(() -> m_intakeSubsystem.setIntakePercent(1.0), m_intakeSubsystem))
         .onFalse(
-            new InstantCommand(() -> m_intakeSubsystem.setIntakeVoltage(0), m_intakeSubsystem));
+            new InstantCommand(() -> m_intakeSubsystem.setIntakePercent(0), m_intakeSubsystem));
     driverController
         .rightTrigger()
         .onTrue(
             new InstantCommand(() -> m_intakeSubsystem.setIntakePercent(-0.5), m_intakeSubsystem))
         .onFalse(
-            new InstantCommand(() -> m_intakeSubsystem.setIntakeVoltage(0), m_intakeSubsystem));
+            new InstantCommand(() -> m_intakeSubsystem.setIntakePercent(0), m_intakeSubsystem));
   }
 
   private void configureAuxButtonBindings() {
@@ -159,13 +160,13 @@ public class RobotContainer {
         .onTrue(
             new InstantCommand(() -> m_intakeSubsystem.setIntakePercent(1.0), m_intakeSubsystem))
         .onFalse(
-            new InstantCommand(() -> m_intakeSubsystem.setIntakeVoltage(0), m_intakeSubsystem));
+            new InstantCommand(() -> m_intakeSubsystem.setIntakePercent(0), m_intakeSubsystem));
     auxController
         .leftBumper()
         .onTrue(
             new InstantCommand(() -> m_intakeSubsystem.setIntakePercent(-0.5), m_intakeSubsystem))
         .onFalse(
-            new InstantCommand(() -> m_intakeSubsystem.setIntakeVoltage(0), m_intakeSubsystem));
+            new InstantCommand(() -> m_intakeSubsystem.setIntakePercent(0), m_intakeSubsystem));
 
     auxController
         .leftTrigger()
@@ -176,13 +177,18 @@ public class RobotContainer {
             new InstantCommand(() -> m_shooterSubsystem.setBothSetpoint(0, 0), m_shooterSubsystem));
   }
 
+  public void stopEverything() {
+    m_shooterSubsystem.setBothSetpoint(0, 0);
+    m_intakeSubsystem.setIntakePercent(0);
+  }
+
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return null;
+    return new shootAuto(m_shooterSubsystem, m_intakeSubsystem);
     // autoChooser.get();
   }
 }

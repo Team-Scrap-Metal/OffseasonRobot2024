@@ -85,4 +85,8 @@ public class Shooter extends SubsystemBase {
     leftPID.setSetpoint(0);
     rightPID.setSetpoint(0);
   }
+
+  public boolean atSetpoint() {
+    return leftPID.atSetpoint() && rightPID.atSetpoint();
+  }
 }
