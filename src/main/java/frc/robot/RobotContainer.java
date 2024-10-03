@@ -22,6 +22,9 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.RobotStateConstants;
 import frc.robot.commands.AutoCommands.shootAuto;
+import frc.robot.commands.TeleopCommands.shotRelease;
+import frc.robot.commands.TeleopCommands.shotSetUp;
+import frc.robot.commands.ZeroCommands.ZeroAll;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOKrakenNeo;
@@ -156,25 +159,11 @@ public class RobotContainer {
   private void configureAuxButtonBindings() {
     /** Aux Controls */
     auxController
-        .rightBumper()
-        .onTrue(
-            new InstantCommand(() -> m_intakeSubsystem.setIntakePercent(1.0), m_intakeSubsystem))
-        .onFalse(
-            new InstantCommand(() -> m_intakeSubsystem.setIntakePercent(0), m_intakeSubsystem));
-    auxController
-        .leftBumper()
-        .onTrue(
-            new InstantCommand(() -> m_intakeSubsystem.setIntakePercent(-0.5), m_intakeSubsystem))
-        .onFalse(
-            new InstantCommand(() -> m_intakeSubsystem.setIntakePercent(0), m_intakeSubsystem));
+        .a().onTrue(new shotRelease(m_intakeSubsystem)).onFalse(new ZeroAll(m_intakeSubsystem, m_shooterSubsystem));
 
     auxController
         .leftTrigger()
-        .onTrue(
-            new InstantCommand(
-                () -> m_shooterSubsystem.setBothSetpoint(3000, 4000), m_shooterSubsystem))
-        .onFalse(
-            new InstantCommand(() -> m_shooterSubsystem.setBothSetpoint(0, 0), m_shooterSubsystem));
+        .onTrue(new shotSetUp(m_intakeSubsystem, m_shooterSubsystem)).onFalse(new ZeroAll(m_intakeSubsystem, m_shooterSubsystem));
   }
 
   public void stopEverything() {
