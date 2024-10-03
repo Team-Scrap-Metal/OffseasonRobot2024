@@ -75,4 +75,14 @@ public final class Constants {
   public final class UnitConversions {
     public static final double MIN_TO_MS = 60000;
   }
+
+  public static final class PathPlannerConstants {
+    public static final double translationkP = 0.0;
+    public static final double translationkI = 0.0;
+    public static final double translationkD = 0.0;
+
+    public static final double rotationkP = 0.0;
+    public static final double rotationkI = 0.0;
+    public static final double rotationkD = 0.0;
+  }
 }
