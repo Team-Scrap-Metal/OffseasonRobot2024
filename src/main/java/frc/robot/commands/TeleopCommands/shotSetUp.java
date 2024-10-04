@@ -22,8 +22,10 @@ public class shotSetUp extends SequentialCommandGroup {
         Commands.runOnce(
             () -> {
               intake.setIntakePercent(-0.5);
+              shoot.setBothSetpoint(-1000, -1000);
             },
-            intake),
+            intake,
+            shoot),
         new WaitCommand(0.2),
         Commands.runOnce(
             () -> {

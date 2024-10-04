@@ -45,10 +45,10 @@ public class DriveConstants {
   }
 
   public static enum ABSOLUTE_ENCODER_OFFSET_RAD {
-    FRONT_RIGHT(0.245), // Module 0 //TODO: Update
-    FRONT_LEFT(-0.318), // Module 1 //TODO: Update
-    BACK_LEFT(-0.261), // Module 2 //TODO: Update
-    BACK_RIGHT(0.598); // Module 3 //TODO: Update
+    FRONT_RIGHT(0.252), // Module 0 //TODO: Update
+    FRONT_LEFT(-0.313), // Module 1 //TODO: Update
+    BACK_LEFT(-0.270), // Module 2 //TODO: Update
+    BACK_RIGHT(0.612); // Module 3 //TODO: Update
 
     public final double OFFSET;
 

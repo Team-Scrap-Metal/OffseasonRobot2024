@@ -143,7 +143,7 @@ public class RobotContainer {
                 m_driveSubsystem.driveWithDeadband(
                     driverController.getLeftX() * 1, // Forward/backward
                     -driverController.getLeftY()
-                        * 1, // Left/Right (multiply by -1 bc controller axis is inverted)
+                        * 0.75, // Left/Right (multiply by -1 bc controller axis is inverted)
                     driverController.getRightX() * (1)), // Rotate chassis left/right
             m_driveSubsystem));
 
