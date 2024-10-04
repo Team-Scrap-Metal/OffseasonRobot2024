@@ -77,7 +77,7 @@ public final class Constants {
   }
 
   public static final class PathPlannerConstants {
-    public static final double translationkP = 0.0;
+    public static final double translationkP = 5;
     public static final double translationkI = 0.0;
     public static final double translationkD = 0.0;
 

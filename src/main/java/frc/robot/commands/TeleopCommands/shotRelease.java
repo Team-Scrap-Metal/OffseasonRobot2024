@@ -17,11 +17,10 @@ public class shotRelease extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-             Commands.runOnce(
+        Commands.runOnce(
             () -> {
               intake.setIntakePercent(1.0);
             },
-            intake)
-    );
+            intake));
   }
 }

@@ -13,6 +13,7 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -38,7 +39,9 @@ import frc.robot.subsystems.intake.IntakeIOCIM;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.ShooterIO;
 import frc.robot.subsystems.shooter.ShooterIONEO;
+import frc.robot.utils.PathPlanner;
 import frc.robot.utils.PoseEstimator;
+import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -53,6 +56,7 @@ public class RobotContainer {
   private final Shooter m_shooterSubsystem;
   private final Intake m_intakeSubsystem;
   private final PoseEstimator m_poseEstimator;
+  private final PathPlanner m_pathPlanner;
   // Controller
   private final CommandXboxController driverController =
       new CommandXboxController(OperatorConstants.DRIVER_PORT);
@@ -60,7 +64,7 @@ public class RobotContainer {
       new CommandXboxController(OperatorConstants.AUX_PORT);
 
   // Dashboard inputs
-  // private final LoggedDashboardChooser<Command> autoChooser;
+  private final LoggedDashboardChooser<Command> autoChooser;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -112,6 +116,12 @@ public class RobotContainer {
     }
 
     m_poseEstimator = new PoseEstimator(m_driveSubsystem, m_gyroSubsystem);
+    m_pathPlanner = new PathPlanner(m_driveSubsystem, m_poseEstimator);
+
+    autoChooser = new LoggedDashboardChooser<>("Autos");
+    autoChooser.addOption("One Shot", new shootAuto(m_shooterSubsystem, m_intakeSubsystem));
+    autoChooser.addDefaultOption("Test Auto", new PathPlannerAuto("Test Auto"));
+
     // Configure the button bindings
     configureDriverButtonBindings();
     configureAuxButtonBindings();
@@ -159,11 +169,14 @@ public class RobotContainer {
   private void configureAuxButtonBindings() {
     /** Aux Controls */
     auxController
-        .a().onTrue(new shotRelease(m_intakeSubsystem)).onFalse(new ZeroAll(m_intakeSubsystem, m_shooterSubsystem));
+        .a()
+        .onTrue(new shotRelease(m_intakeSubsystem))
+        .onFalse(new ZeroAll(m_intakeSubsystem, m_shooterSubsystem));
 
     auxController
         .leftTrigger()
-        .onTrue(new shotSetUp(m_intakeSubsystem, m_shooterSubsystem)).onFalse(new ZeroAll(m_intakeSubsystem, m_shooterSubsystem));
+        .onTrue(new shotSetUp(m_intakeSubsystem, m_shooterSubsystem))
+        .onFalse(new ZeroAll(m_intakeSubsystem, m_shooterSubsystem));
   }
 
   public void stopEverything() {
@@ -177,7 +190,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new shootAuto(m_shooterSubsystem, m_intakeSubsystem);
-    // autoChooser.get();
+    return autoChooser.get();
   }
 }

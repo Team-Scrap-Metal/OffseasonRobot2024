@@ -18,16 +18,16 @@ public class ZeroAll extends ParallelCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-             Commands.runOnce(
+        Commands.runOnce(
             () -> {
               intake.setIntakePercent(-0.0);
             },
             intake),
-                         Commands.runOnce(
+        Commands.runOnce(
             () -> {
-              shoot.setBothSetpoint(0, 0);;
+              shoot.setBothSetpoint(0, 0);
+              ;
             },
-            shoot)
-    );
+            shoot));
   }
 }

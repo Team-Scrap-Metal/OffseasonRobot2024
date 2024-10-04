@@ -19,18 +19,17 @@ public class shotSetUp extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-       Commands.runOnce(
+        Commands.runOnce(
             () -> {
               intake.setIntakePercent(-0.5);
             },
             intake),
-               new WaitCommand(0.2),
-                 Commands.runOnce(
+        new WaitCommand(0.2),
+        Commands.runOnce(
             () -> {
               shoot.setBothSetpoint(4000, 3000);
               intake.setIntakePercent(0);
             },
-            shoot)     
-    );
+            shoot));
   }
 }
