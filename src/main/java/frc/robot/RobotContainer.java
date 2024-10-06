@@ -14,6 +14,7 @@
 package frc.robot;
 
 import com.pathplanner.lib.commands.PathPlannerAuto;
+import edu.wpi.first.math.proto.Trajectory;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -120,7 +121,8 @@ public class RobotContainer {
 
     autoChooser = new LoggedDashboardChooser<>("Autos");
     autoChooser.addOption("One Shot", new shootAuto(m_shooterSubsystem, m_intakeSubsystem));
-    autoChooser.addDefaultOption("Test Auto", new PathPlannerAuto("Test Auto"));
+    autoChooser.addDefaultOption("New Auto", new PathPlannerAuto("New Auto"));
+    final Trajectory traj = new Trajectory();
 
     // Configure the button bindings
     configureDriverButtonBindings();
