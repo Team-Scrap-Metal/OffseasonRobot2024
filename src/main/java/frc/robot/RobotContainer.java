@@ -146,7 +146,7 @@ public class RobotContainer {
                     driverController.getLeftX() * 1, // Forward/backward
                     -driverController.getLeftY()
                         * 0.75, // Left/Right (multiply by -1 bc controller axis is inverted)
-                    driverController.getRightX() * (1)), // Rotate chassis left/right
+                    driverController.getRightX() * (-1)), // Rotate chassis left/right
             m_driveSubsystem));
 
     // Resets robot heading to be wherever the front of the robot is facing
