@@ -81,8 +81,9 @@ public final class Constants {
     public static final double translationkI = 0.0;
     public static final double translationkD = 0.2;
 
-    public static final double rotationkP = 2.0;
+    // 418vel 418accel
+    public static final double rotationkP = 2.2;
     public static final double rotationkI = 0.0;
-    public static final double rotationkD = .01;
+    public static final double rotationkD = 0.03;
   }
 }
