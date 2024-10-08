@@ -19,7 +19,7 @@ public class DriveConstants {
   public static final double GEAR_RATIO = 6.12;
 
   /** Max Speed the Robot Can Travel in One Linear Direction (m/s) */
-  public static final double MAX_LINEAR_SPEED_M_PER_SEC = 5.2; // TODO: Update
+  public static final double MAX_LINEAR_SPEED_M_PER_SEC = 4.82; // TODO: Update
 
   /** Determines how the Motor Acts when On and Disabled */
   public static final boolean IS_BRAKE_MODE = true;
@@ -187,7 +187,7 @@ public class DriveConstants {
     public static final double NEO_KD = 0.03;
 
     /** Set the inverted for the drive TalonFX */
-    public static final boolean INVERT_TALONFX = false;
+    public static final boolean INVERT_TALONFX = true;
     /** Set the inverted for the turn SPARKMAX */
     public static final boolean INVERT_SPARK_MAX = true;
   }

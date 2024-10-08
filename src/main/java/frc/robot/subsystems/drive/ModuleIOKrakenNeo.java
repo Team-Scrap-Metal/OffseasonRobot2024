@@ -22,7 +22,6 @@ public class ModuleIOKrakenNeo implements ModuleIO {
   private final RelativeEncoder turnRelativeEncoder;
   private final CANcoder turnAbsoluteEncoder;
 
-  private final boolean isTurnMotorInverted = false;
   private final double absoluteEncoderOffset;
   private final int swerveModuleNumber;
 
