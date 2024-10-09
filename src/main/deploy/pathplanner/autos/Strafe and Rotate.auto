@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.1500679206779225,
-      "y": 5.5040931765173085
+      "x": 1.1969112668610487,
+      "y": 5.515804013063089
     },
-    "rotation": 177.13759477388817
+    "rotation": 180.0
   },
   "command": {
     "type": "sequential",
@@ -14,7 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "New New New Path"
+            "pathName": "Strafe"
           }
         }
       ]
