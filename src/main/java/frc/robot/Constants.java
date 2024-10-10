@@ -77,13 +77,13 @@ public final class Constants {
   }
 
   public static final class PathPlannerConstants {
-    public static final double translationkP = 5.4;
+    public static final double translationkP = 6.0;
     public static final double translationkI = 0.0;
-    public static final double translationkD = 0.2;
+    public static final double translationkD = 0.0;
 
     // 418vel 418accel
-    public static final double rotationkP = 2.2;
+    public static final double rotationkP = 5.0;
     public static final double rotationkI = 0.0;
-    public static final double rotationkD = 0.03;
+    public static final double rotationkD = 0.0;
   }
 }

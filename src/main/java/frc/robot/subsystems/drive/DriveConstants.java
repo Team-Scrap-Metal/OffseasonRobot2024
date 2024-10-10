@@ -45,10 +45,10 @@ public class DriveConstants {
   }
 
   public static enum ABSOLUTE_ENCODER_OFFSET_RAD {
-    FRONT_RIGHT(0.252), // Module 0 //TODO: Update
-    FRONT_LEFT(-0.313), // Module 1 //TODO: Update
-    BACK_LEFT(-0.270), // Module 2 //TODO: Update
-    BACK_RIGHT(0.612); // Module 3 //TODO: Update
+    FRONT_RIGHT(0.253), // Module 0 //TODO: Update
+    FRONT_LEFT(-0.319), // Module 1 //TODO: Update
+    BACK_LEFT(-0.262), // Module 2 //TODO: Update
+    BACK_RIGHT(0.598); // Module 3 //TODO: Update
 
     public final double OFFSET;
 
@@ -171,10 +171,10 @@ public class DriveConstants {
     // Feed Forward values used in sim: S = 0.4, V = 0.4
 
     /** KS represents the voltage required to overcome static friction */
-    public static final double KRAKEN_KS = 0.4;
+    public static final double KRAKEN_KS = 0.1;
 
     /** KV represents the voltage used every second per meter */
-    public static final double KRAKEN_KV = 0.4;
+    public static final double KRAKEN_KV = 0.11;
 
     // PID Constants for Neo Steer
     /**

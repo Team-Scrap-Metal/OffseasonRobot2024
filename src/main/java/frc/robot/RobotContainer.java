@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.RobotStateConstants;
+import frc.robot.commands.AutoCommands.driveForwardAuto;
 import frc.robot.commands.AutoCommands.shootAuto;
 import frc.robot.commands.TeleopCommands.shotRelease;
 import frc.robot.commands.TeleopCommands.shotSetUp;
@@ -123,7 +124,8 @@ public class RobotContainer {
     autoChooser.addOption("Straight", new PathPlannerAuto("Straight"));
     autoChooser.addOption("Strafe", new PathPlannerAuto("Strafe"));
     autoChooser.addOption("Straight and Rotate 90", new PathPlannerAuto("Straight and Rotate 90"));
-    // autoChooser.addOption("Strafe and Rotate", new PathPlannerAuto("Strafe and Rotate"));
+    autoChooser.addOption("Strafe and Rotate", new PathPlannerAuto("Strafe and Rotate"));
+    autoChooser.addOption("Manual Drive Forward", new driveForwardAuto(m_driveSubsystem));
 
     // Configure the button bindings
     configureDriverButtonBindings();
