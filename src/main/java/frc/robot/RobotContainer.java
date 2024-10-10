@@ -13,6 +13,7 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -22,8 +23,8 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.RobotStateConstants;
-import frc.robot.commands.AutoCommands.driveForwardAuto;
 import frc.robot.commands.AutoCommands.shootAuto;
+import frc.robot.commands.PathPlannerCommands.IntakeNote;
 import frc.robot.commands.TeleopCommands.shotRelease;
 import frc.robot.commands.TeleopCommands.shotSetUp;
 import frc.robot.commands.ZeroCommands.ZeroAll;
@@ -116,6 +117,11 @@ public class RobotContainer {
         break;
     }
 
+    NamedCommands.registerCommand("Intake", new IntakeNote(m_intakeSubsystem, 1.0));
+    NamedCommands.registerCommand(
+        "ShotSetUp", new shotSetUp(m_intakeSubsystem, m_shooterSubsystem));
+    NamedCommands.registerCommand("ShotRelease", new shotRelease(m_intakeSubsystem));
+
     m_poseEstimator = new PoseEstimator(m_driveSubsystem, m_gyroSubsystem);
     m_pathPlanner = new PathPlanner(m_driveSubsystem, m_poseEstimator);
 
@@ -125,7 +131,9 @@ public class RobotContainer {
     autoChooser.addOption("Strafe", new PathPlannerAuto("Strafe"));
     autoChooser.addOption("Straight and Rotate 90", new PathPlannerAuto("Straight and Rotate 90"));
     autoChooser.addOption("Strafe and Rotate", new PathPlannerAuto("Strafe and Rotate"));
-    autoChooser.addOption("Manual Drive Forward", new driveForwardAuto(m_driveSubsystem));
+    autoChooser.addOption("Strafe and Rotate", new PathPlannerAuto("Strafe and Rotate"));
+    autoChooser.addOption("Straight Shoot", new PathPlannerAuto("Straight Shoot"));
+    autoChooser.addOption("One Piece Center", new PathPlannerAuto("One Piece Center"));
 
     // Configure the button bindings
     configureDriverButtonBindings();

@@ -5,7 +5,7 @@
       "x": 1.1734895937694858,
       "y": 5.562647359246215
     },
-    "rotation": -90.0
+    "rotation": 180.0
   },
   "command": {
     "type": "sequential",
@@ -15,6 +15,12 @@
           "type": "path",
           "data": {
             "pathName": "Straight to Note"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
           }
         }
       ]
