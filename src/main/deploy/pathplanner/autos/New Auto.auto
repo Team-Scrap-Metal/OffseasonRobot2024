@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.1969112668610487,
-      "y": 5.515804013063089
+      "x": 0.6700651803079412,
+      "y": 4.572775938004707
     },
-    "rotation": 180.0
+    "rotation": -59.50664159752435
   },
   "command": {
     "type": "sequential",
@@ -14,7 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Strafe"
+            "pathName": "TM5"
           }
         }
       ]

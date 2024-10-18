@@ -127,12 +127,13 @@ public class RobotContainer {
 
     autoChooser = new LoggedDashboardChooser<>("Autos");
     autoChooser.addDefaultOption("One Shot", new shootAuto(m_shooterSubsystem, m_intakeSubsystem));
-    autoChooser.addOption("Straight", new PathPlannerAuto("Straight"));
-    autoChooser.addOption("Strafe", new PathPlannerAuto("Strafe"));
-    autoChooser.addOption("Straight and Rotate 90", new PathPlannerAuto("Straight and Rotate 90"));
-    autoChooser.addOption("Strafe and Rotate", new PathPlannerAuto("Strafe and Rotate"));
-    autoChooser.addOption("Strafe and Rotate", new PathPlannerAuto("Strafe and Rotate"));
-    autoChooser.addOption("Straight Shoot", new PathPlannerAuto("Straight Shoot"));
+    // autoChooser.addOption("Straight", new PathPlannerAuto("Straight"));
+    // autoChooser.addOption("Strafe", new PathPlannerAuto("Strafe"));
+    // autoChooser.addOption("Straight and Rotate 90", new PathPlannerAuto("Straight and Rotate
+    // 90"));
+    // autoChooser.addOption("Strafe and Rotate", new PathPlannerAuto("Strafe and Rotate"));
+    // autoChooser.addOption("Strafe and Rotate", new PathPlannerAuto("Strafe and Rotate"));
+    // autoChooser.addOption("Straight Shoot", new PathPlannerAuto("Straight Shoot"));
     autoChooser.addOption("One Piece Center", new PathPlannerAuto("One Piece Center"));
 
     // Configure the button bindings
