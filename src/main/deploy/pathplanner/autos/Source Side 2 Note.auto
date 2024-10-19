@@ -16,6 +16,24 @@
           "data": {
             "pathName": "TM5"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BM5"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TM3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BM3"
+          }
         }
       ]
     }
