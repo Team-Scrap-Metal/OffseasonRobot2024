@@ -7,68 +7,55 @@ import com.revrobotics.RelativeEncoder;
 import frc.robot.Constants.RobotStateConstants;
 
 public class ShooterIONEO implements ShooterIO {
-  private final CANSparkMax leftSparkMax;
-  private final CANSparkMax rightSparkMax;
-
-  private final RelativeEncoder leftRelativeEncoder;
-  private final RelativeEncoder rightRelativeEncoder;
+  private final CANSparkMax CANSparkMaxLeft;
+  private final CANSparkMax CANSparkMAxRight;
+  private final RelativeEncoder RelativeEncoderLeft;
+  private final RelativeEncoder RelativeEncoderRight;
 
   public ShooterIONEO() {
-    System.out.println("[Init] Creating IntakeIONeo");
-    leftSparkMax = new CANSparkMax(ShooterConstants.LEFT_CAN_ID, MotorType.kBrushless);
-    rightSparkMax = new CANSparkMax(ShooterConstants.RIGHT_CAN_ID, MotorType.kBrushless);
+    CANSparkMAxRight = new CANSparkMax(ShooterConstants.RIGHT_CAN_ID, MotorType.kBrushless);
+    CANSparkMaxLeft = new CANSparkMax(ShooterConstants.LEFT_CAN_ID, MotorType.kBrushless);
 
-    leftRelativeEncoder = leftSparkMax.getEncoder();
-    rightRelativeEncoder = rightSparkMax.getEncoder();
-    leftSparkMax.setCANTimeout(RobotStateConstants.CAN_CONFIG_TIMEOUT_SEC);
-    rightSparkMax.setCANTimeout(RobotStateConstants.CAN_CONFIG_TIMEOUT_SEC);
 
-    leftSparkMax.setInverted(ShooterConstants.LEFT_INVERTED);
-    rightSparkMax.setInverted(ShooterConstants.RIGHT_INVERTED);
+    RelativeEncoderRight = CANSparkMAxRight.getEncoder();
+    RelativeEncoderLeft = CANSparkMaxLeft.getEncoder();
 
-    leftRelativeEncoder.setPosition(0);
-    rightRelativeEncoder.setPosition(0);
+    CANSparkMAxRight.setSmartCurrentLimit(ShooterConstants.CURR_LIM_A);
+    CANSparkMaxLeft.setSmartCurrentLimit(ShooterConstants.CURR_LIM_A);
+    CANSparkMAxRight.setInverted(ShooterConstants.RIGHT_INVERTED);
+    CANSparkMaxLeft.setInverted(ShooterConstants.LEFT_INVERTED);
+    CANSparkMAxRight.setIdleMode(IdleMode.kBrake);
+    CANSparkMaxLeft.setIdleMode(IdleMode.kBrake);
+    CANSparkMAxRight.setCANTimeout(RobotStateConstants.CAN_CONFIG_TIMEOUT_SEC);
+    CANSparkMaxLeft.setCANTimeout(RobotStateConstants.CAN_CONFIG_TIMEOUT_SEC);
+    RelativeEncoderLeft.setPosition(0);
 
-    leftSparkMax.setSmartCurrentLimit(ShooterConstants.CURR_LIM_A);
-    rightSparkMax.setSmartCurrentLimit(ShooterConstants.CURR_LIM_A);
-
-    leftSparkMax.setIdleMode(IdleMode.kBrake);
-    rightSparkMax.setIdleMode(IdleMode.kBrake);
   }
-
-  /** Updates inputs for the Shooter */
   public void updateInputs(ShooterIOInputs inputs) {
     /** Velocity of the shooter Rollers in Rotations per Minute */
-    inputs.leftVelocityRPM = leftRelativeEncoder.getVelocity();
+    inputs.leftVelocityRPM = RelativeEncoderLeft.getVelocity();
     /** Number of volts being sent to the shooter motor */
-    inputs.leftAppliedVolts = leftSparkMax.getAppliedOutput() * leftSparkMax.getBusVoltage();
+    inputs.leftAppliedVolts = CANSparkMaxLeft.getAppliedOutput() * CANSparkMaxLeft.getBusVoltage();
     /** Velocity of the shooter Rollers in Rotations per Minute */
-    inputs.rightVelocityRPM = rightRelativeEncoder.getVelocity();
+    inputs.rightVelocityRPM = RelativeEncoderRight.getVelocity();
     /** Number of volts being sent to the shooter motor */
-    inputs.rightAppliedVolts = rightSparkMax.getAppliedOutput() * rightSparkMax.getBusVoltage();
+    inputs.rightAppliedVolts = CANSparkMAxRight.getAppliedOutput() * CANSparkMAxRight.getBusVoltage(); 
     /** Number of Amps being used by the shooter motor */
-    inputs.currentAmps =
-        new double[] {leftSparkMax.getOutputCurrent(), rightSparkMax.getOutputCurrent()};
+    inputs.currentAmps = new double[] {CANSparkMAxRight.getOutputCurrent(), CANSparkMaxLeft.getMotorTemperature()};
     /** Tempature of the shooter motor */
-    inputs.tempCelsius =
-        new double[] {leftSparkMax.getMotorTemperature(), rightSparkMax.getMotorTemperature()};
+    inputs.tempCelsius = new double[] {CANSparkMAxRight.getMotorTemperature(), CANSparkMaxLeft.getMotorTemperature()};
   }
 
-  /**
-   * Sets the voltage for the Shooter
-   *
-   * @param volts -12 to 12
-   */
-  public void setLeftShooterVoltage(double volts) {
-    leftSparkMax.setVoltage(volts);
+  public  void setLeftShooterVoltage(double volts) {
+    CANSparkMaxLeft.setVoltage(volts);
   }
   /**
    * Sets the voltage for the Shooter
    *
    * @param volts -12 to 12
    */
-  public void setRightShooterVoltage(double volts) {
-    rightSparkMax.setVoltage(volts);
+  public  void setRightShooterVoltage(double volts) {
+    CANSparkMAxRight.setVoltage(volts);
   }
 
   /**
@@ -78,7 +65,19 @@ public class ShooterIONEO implements ShooterIO {
    *
    * @param enable if enable, it sets brake mode, else it sets coast mode
    */
-  public void setBrakeMode(boolean enable) {
-    rightSparkMax.setIdleMode(enable ? IdleMode.kBrake : IdleMode.kCoast);
+  public  void setIdleMode(boolean enable) {
+    if(enable) {
+      CANSparkMAxRight.setIdleMode(IdleMode.kBrake);
+      CANSparkMaxLeft.setIdleMode(IdleMode.kBrake);
+    } else {
+      CANSparkMAxRight.setIdleMode(IdleMode.kCoast);
+      CANSparkMaxLeft.setIdleMode(IdleMode.kCoast);
+    }
   }
+
+
+
+
+
 }
+
