@@ -47,9 +47,9 @@ public class RobotContainer {
   // Subsystems
   private final Drive m_driveSubsystem;
   private final Gyro m_gyroSubsystem;
-  private final Shooter m_shooterSubsystem;
   private final Intake m_intakeSubsystem;
   private final PoseEstimator m_poseEstimator;
+  private final Shooter m_shooterSubsystem; 
   // Controller
   private final CommandXboxController driverController =
       new CommandXboxController(OperatorConstants.DRIVER_PORT);
@@ -72,8 +72,8 @@ public class RobotContainer {
                 new ModuleIOKrakenNeo(2),
                 new ModuleIOKrakenNeo(3),
                 m_gyroSubsystem);
-        m_shooterSubsystem = new Shooter(new ShooterIONEO());
         m_intakeSubsystem = new Intake(new IntakeIOCIM());
+        m_shooterSubsystem = new Shooter(new ShooterIONEO());
 
         break;
 
@@ -87,9 +87,9 @@ public class RobotContainer {
                 new ModuleIOSimNeoCIM(),
                 new ModuleIOSimNeoCIM(),
                 m_gyroSubsystem);
-
-        m_shooterSubsystem = new Shooter(new ShooterIO() {});
         m_intakeSubsystem = new Intake(new IntakeIO() {});
+        m_shooterSubsystem = new Shooter(new ShooterIO() {});
+
         break;
 
       default:
@@ -103,8 +103,8 @@ public class RobotContainer {
                 new ModuleIO() {},
                 m_gyroSubsystem);
 
-        m_shooterSubsystem = new Shooter(new ShooterIO() {});
         m_intakeSubsystem = new Intake(new IntakeIO() {});
+        m_shooterSubsystem = new Shooter(new ShooterIO() {});
         break;
     }
 
@@ -167,18 +167,11 @@ public class RobotContainer {
             new InstantCommand(() -> m_intakeSubsystem.setIntakePercent(-0.5), m_intakeSubsystem))
         .onFalse(
             new InstantCommand(() -> m_intakeSubsystem.setIntakePercent(0), m_intakeSubsystem));
+    
 
-    auxController
-        .leftTrigger()
-        .onTrue(
-            new InstantCommand(
-                () -> m_shooterSubsystem.setBothSetpoint(3000, 4000), m_shooterSubsystem))
-        .onFalse(
-            new InstantCommand(() -> m_shooterSubsystem.setBothSetpoint(0, 0), m_shooterSubsystem));
   }
 
   public void stopEverything() {
-    m_shooterSubsystem.setBothSetpoint(0, 0);
     m_intakeSubsystem.setIntakePercent(0);
   }
 
@@ -188,7 +181,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new shootAuto(m_shooterSubsystem, m_intakeSubsystem);
-    // autoChooser.get();
+    return null;
   }
 }
