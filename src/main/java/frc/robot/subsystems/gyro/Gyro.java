@@ -52,6 +52,12 @@ public class Gyro extends SubsystemBase {
   public Rotation2d getAngle() {
     return inputs.anglePositionRad;
   }
+  /**
+   * @return the rate of change of the angle of the gyro
+   */
+  public double getRate(){
+    return inputs.rateDegPerSec;
+  }
 
   /** Resets the Heading to the Direction the Gyro is Facing */
   public void zeroYaw() {

@@ -25,11 +25,13 @@ public class PoseEstimator extends SubsystemBase {
    * theta] or meters, meters, radians
    */
   public static Vector<N3> stateStandardDevs = VecBuilder.fill(0.1, 0.1, 0.1);
+  public static Vector<N3> visionStandardDevs = VecBuilder.fill(.5,.5,9999999);
 
   private SwerveDrivePoseEstimator poseEstimator;
   private Drive drive;
   private Gyro gyro;
   private Field2d field2d;
+  private LimelightHelpers.PoseEstimate mt1;
 
   public PoseEstimator(Drive drive, Gyro gyro) {
 
@@ -43,7 +45,12 @@ public class PoseEstimator extends SubsystemBase {
             new SwerveDriveKinematics(DriveConstants.getModuleTranslations()),
             gyro.getYaw(),
             drive.getSwerveModulePositions(),
-            new Pose2d(new Translation2d(), new Rotation2d()));
+            new Pose2d(new Translation2d(), new Rotation2d()),
+            stateStandardDevs,
+            visionStandardDevs
+            );
+
+            mt1 = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
   }
 
   @Override
@@ -55,6 +62,58 @@ public class PoseEstimator extends SubsystemBase {
       poseEstimator.updateWithTime(
           Timer.getFPGATimestamp(), drive.getRotation(), drive.getSwerveModulePositions());
     }
+
+    // boolean useMegaTag2 = true; //set to false to use MegaTag1
+    // boolean doRejectUpdate = false;
+    // if(useMegaTag2 == false)
+    // {
+      
+    //   if(mt1.tagCount == 1 && mt1.rawFiducials.length == 1)
+    //   {
+    //     if(mt1.rawFiducials[0].ambiguity > .7)
+    //     {
+    //       doRejectUpdate = true;
+    //     }
+    //     if(mt1.rawFiducials[0].distToCamera > 3)
+    //     {
+    //       doRejectUpdate = true;
+    //     }
+    //   }
+    //   if(mt1.tagCount == 0)
+    //   {
+    //     doRejectUpdate = true;
+    //   }
+
+    //   if(!doRejectUpdate)
+    //   {
+        poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.5,.5,9999999));
+        poseEstimator.addVisionMeasurement(
+            mt1.pose,
+            mt1.timestampSeconds);
+    //   }
+    // }
+    // else if (useMegaTag2 == true)
+    // {
+    //   LimelightHelpers.SetRobotOrientation("limelight", poseEstimator.getEstimatedPosition().getRotation().getDegrees(), 0, 0, 0, 0, 0);
+    //   LimelightHelpers.PoseEstimate mt2 = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
+    //   if(Math.abs(gyro.getRate()) > 720) // if our angular velocity is greater than 720 degrees per second, ignore vision updates
+    //   {
+    //     doRejectUpdate = true;
+    //   }
+      
+    //   if(mt2.tagCount == 0)
+    //   {
+    //     doRejectUpdate = true;
+    //   }
+      
+    //   if(!doRejectUpdate)
+    //   {
+    //     poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.7,.7,9999999));
+    //     poseEstimator.addVisionMeasurement(
+    //         mt2.pose,
+    //         mt2.timestampSeconds);
+    //   }
+    // }
   }
 
   /**
