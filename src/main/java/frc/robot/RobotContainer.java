@@ -121,6 +121,8 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "ShotSetUp", new shotSetUp(m_intakeSubsystem, m_shooterSubsystem));
     NamedCommands.registerCommand("ShotRelease", new shotRelease(m_intakeSubsystem));
+    NamedCommands.registerCommand(
+        "ShotEnd", new InstantCommand(() -> m_shooterSubsystem.setBothSetpoint(0, 0)));
 
     m_poseEstimator = new PoseEstimator(m_driveSubsystem, m_gyroSubsystem);
     m_pathPlanner = new PathPlanner(m_driveSubsystem, m_poseEstimator);
@@ -135,6 +137,7 @@ public class RobotContainer {
     // autoChooser.addOption("Strafe and Rotate", new PathPlannerAuto("Strafe and Rotate"));
     // autoChooser.addOption("Straight Shoot", new PathPlannerAuto("Straight Shoot"));
     autoChooser.addOption("One Piece Center", new PathPlannerAuto("One Piece Center"));
+    autoChooser.addOption("Two Piece Center", new PathPlannerAuto("Two Piece Center"));
 
     // Configure the button bindings
     configureDriverButtonBindings();
@@ -157,7 +160,7 @@ public class RobotContainer {
                 m_driveSubsystem.driveWithDeadband(
                     driverController.getLeftX() * 1, // Forward/backward
                     -driverController.getLeftY()
-                        * 0.75, // Left/Right (multiply by -1 bc controller axis is inverted)
+                        * 1, // Left/Right (multiply by -1 bc controller axis is inverted)
                     driverController.getRightX() * (-1)), // Rotate chassis left/right
             m_driveSubsystem));
 

@@ -19,7 +19,7 @@ public class DriveConstants {
   public static final double GEAR_RATIO = 6.12;
 
   /** Max Speed the Robot Can Travel in One Linear Direction (m/s) */
-  public static final double MAX_LINEAR_SPEED_M_PER_SEC = 4.82; // TODO: Update
+  public static final double MAX_LINEAR_SPEED_M_PER_SEC = 5.4; // TODO: Update
 
   /** Determines how the Motor Acts when On and Disabled */
   public static final boolean IS_BRAKE_MODE = true;
