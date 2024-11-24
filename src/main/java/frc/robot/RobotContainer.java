@@ -35,6 +35,7 @@ import frc.robot.subsystems.intake.IntakeIOCIM;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.ShooterIO;
 import frc.robot.subsystems.shooter.ShooterIONEO;
+import frc.robot.utils.LimelightHelpers;
 import frc.robot.utils.PoseEstimator;
 
 /**
@@ -50,6 +51,7 @@ public class RobotContainer {
   private final Shooter m_shooterSubsystem;
   private final Intake m_intakeSubsystem;
   private final PoseEstimator m_poseEstimator;
+  private final LimelightHelpers m_limelightHelpers;
   // Controller
   private final CommandXboxController driverController =
       new CommandXboxController(OperatorConstants.DRIVER_PORT);
@@ -108,6 +110,7 @@ public class RobotContainer {
         break;
     }
 
+    m_limelightHelpers = new LimelightHelpers();
     m_poseEstimator = new PoseEstimator(m_driveSubsystem, m_gyroSubsystem);
     // Configure the button bindings
     configureDriverButtonBindings();

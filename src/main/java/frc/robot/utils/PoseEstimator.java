@@ -51,6 +51,14 @@ public class PoseEstimator extends SubsystemBase {
             );
 
             mt1 = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
+            LimelightHelpers.setCameraPose_RobotSpace("", 
+    0.5,    // Forward offset (meters)
+    0.0,    // Side offset (meters)
+    0.5,    // Height offset (meters)
+    0.0,    // Roll (degrees)
+    30.0,   // Pitch (degrees)
+    0.0     // Yaw (degrees)
+);
   }
 
   @Override
