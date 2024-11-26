@@ -1,0 +1,43 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.6700651803079412,
+      "y": 4.572775938004707
+    },
+    "rotation": -59.50664159752435
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TM5"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BM5"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TM3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BM3"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

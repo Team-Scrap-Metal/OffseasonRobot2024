@@ -19,7 +19,7 @@ public class DriveConstants {
   public static final double GEAR_RATIO = 6.12;
 
   /** Max Speed the Robot Can Travel in One Linear Direction (m/s) */
-  public static final double MAX_LINEAR_SPEED_M_PER_SEC = 5.2; // TODO: Update
+  public static final double MAX_LINEAR_SPEED_M_PER_SEC = 5.4; // TODO: Update
 
   /** Determines how the Motor Acts when On and Disabled */
   public static final boolean IS_BRAKE_MODE = true;
@@ -45,9 +45,9 @@ public class DriveConstants {
   }
 
   public static enum ABSOLUTE_ENCODER_OFFSET_RAD {
-    FRONT_RIGHT(0.245), // Module 0 //TODO: Update
-    FRONT_LEFT(-0.318), // Module 1 //TODO: Update
-    BACK_LEFT(-0.261), // Module 2 //TODO: Update
+    FRONT_RIGHT(0.253), // Module 0 //TODO: Update
+    FRONT_LEFT(-0.319), // Module 1 //TODO: Update
+    BACK_LEFT(-0.262), // Module 2 //TODO: Update
     BACK_RIGHT(0.598); // Module 3 //TODO: Update
 
     public final double OFFSET;
@@ -171,10 +171,10 @@ public class DriveConstants {
     // Feed Forward values used in sim: S = 0.4, V = 0.4
 
     /** KS represents the voltage required to overcome static friction */
-    public static final double KRAKEN_KS = 0.4;
+    public static final double KRAKEN_KS = 0.1;
 
     /** KV represents the voltage used every second per meter */
-    public static final double KRAKEN_KV = 0.4;
+    public static final double KRAKEN_KV = 0.11;
 
     // PID Constants for Neo Steer
     /**
@@ -187,7 +187,7 @@ public class DriveConstants {
     public static final double NEO_KD = 0.03;
 
     /** Set the inverted for the drive TalonFX */
-    public static final boolean INVERT_TALONFX = false;
+    public static final boolean INVERT_TALONFX = true;
     /** Set the inverted for the turn SPARKMAX */
     public static final boolean INVERT_SPARK_MAX = true;
   }
