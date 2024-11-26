@@ -12,8 +12,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.RobotStateConstants;
-import frc.robot.Constants.RobotStateConstants.Mode;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.DriveConstants;
 import frc.robot.subsystems.gyro.Gyro;
@@ -25,7 +23,8 @@ public class PoseEstimator extends SubsystemBase {
    * theta] or meters, meters, radians
    */
   public static Vector<N3> stateStandardDevs = VecBuilder.fill(0.1, 0.1, 0.1);
-  public static Vector<N3> visionStandardDevs = VecBuilder.fill(.5,.5,9999999);
+
+  public static Vector<N3> visionStandardDevs = VecBuilder.fill(.5, .5, 9999999);
 
   private SwerveDrivePoseEstimator poseEstimator;
   private Drive drive;
@@ -47,81 +46,37 @@ public class PoseEstimator extends SubsystemBase {
             drive.getSwerveModulePositions(),
             new Pose2d(new Translation2d(), new Rotation2d()),
             stateStandardDevs,
-            visionStandardDevs
-            );
+            visionStandardDevs);
 
-            mt1 = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
-            LimelightHelpers.setCameraPose_RobotSpace("", 
-    0.5,    // Forward offset (meters)
-    0.0,    // Side offset (meters)
-    0.5,    // Height offset (meters)
-    0.0,    // Roll (degrees)
-    30.0,   // Pitch (degrees)
-    0.0     // Yaw (degrees)
-);
+    mt1 = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
+    // LimelightHelpers.setCameraPose_RobotSpace(
+    //     "",
+    //     0.5, // Forward offset (meters)
+    //     0.0, // Side offset (meters)
+    //     0.5, // Height offset (meters)
+    //     0.0, // Roll (degrees)
+    //     30.0, // Pitch (degrees)
+    //     0.0 // Yaw (degrees)
+    //     );
   }
 
   @Override
   public void periodic() {
     // When ran on the real robot it would overload the command scheduler, causing input delay from
     // joystick to driving
-    if (RobotStateConstants.getMode() == Mode.SIM) {
-      field2d.setRobotPose(getCurrentPose2d());
-      poseEstimator.updateWithTime(
-          Timer.getFPGATimestamp(), drive.getRotation(), drive.getSwerveModulePositions());
+    field2d.setRobotPose(getCurrentPose2d());
+    poseEstimator.updateWithTime(
+        Timer.getFPGATimestamp(), drive.getRotation(), drive.getSwerveModulePositions());
+
+    // System.out.println(mt1.tagCount);
+    // System.out.println(mt1.pose);
+
+    mt1 = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
+    if (mt1.tagCount > 0) {
+      poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(0, 0, 0));
+      poseEstimator.addVisionMeasurement(mt1.pose, mt1.timestampSeconds);
+      // System.out.println("running");
     }
-
-    // boolean useMegaTag2 = true; //set to false to use MegaTag1
-    // boolean doRejectUpdate = false;
-    // if(useMegaTag2 == false)
-    // {
-      
-    //   if(mt1.tagCount == 1 && mt1.rawFiducials.length == 1)
-    //   {
-    //     if(mt1.rawFiducials[0].ambiguity > .7)
-    //     {
-    //       doRejectUpdate = true;
-    //     }
-    //     if(mt1.rawFiducials[0].distToCamera > 3)
-    //     {
-    //       doRejectUpdate = true;
-    //     }
-    //   }
-    //   if(mt1.tagCount == 0)
-    //   {
-    //     doRejectUpdate = true;
-    //   }
-
-    //   if(!doRejectUpdate)
-    //   {
-        poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.5,.5,9999999));
-        poseEstimator.addVisionMeasurement(
-            mt1.pose,
-            mt1.timestampSeconds);
-    //   }
-    // }
-    // else if (useMegaTag2 == true)
-    // {
-    //   LimelightHelpers.SetRobotOrientation("limelight", poseEstimator.getEstimatedPosition().getRotation().getDegrees(), 0, 0, 0, 0, 0);
-    //   LimelightHelpers.PoseEstimate mt2 = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
-    //   if(Math.abs(gyro.getRate()) > 720) // if our angular velocity is greater than 720 degrees per second, ignore vision updates
-    //   {
-    //     doRejectUpdate = true;
-    //   }
-      
-    //   if(mt2.tagCount == 0)
-    //   {
-    //     doRejectUpdate = true;
-    //   }
-      
-    //   if(!doRejectUpdate)
-    //   {
-    //     poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.7,.7,9999999));
-    //     poseEstimator.addVisionMeasurement(
-    //         mt2.pose,
-    //         mt2.timestampSeconds);
-    //   }
-    // }
   }
 
   /**

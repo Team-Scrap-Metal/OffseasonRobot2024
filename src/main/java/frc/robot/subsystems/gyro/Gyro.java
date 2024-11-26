@@ -55,7 +55,7 @@ public class Gyro extends SubsystemBase {
   /**
    * @return the rate of change of the angle of the gyro
    */
-  public double getRate(){
+  public double getRate() {
     return inputs.rateDegPerSec;
   }
 
