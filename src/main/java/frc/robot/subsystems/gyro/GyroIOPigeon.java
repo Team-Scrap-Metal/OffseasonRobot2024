@@ -7,6 +7,7 @@ package frc.robot.subsystems.gyro;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.RobotState;
 
 /** Runs Real Pigeon 2.0 Gyroscope */
 public class GyroIOPigeon implements GyroIO {
@@ -16,7 +17,7 @@ public class GyroIOPigeon implements GyroIO {
   public GyroIOPigeon() {
     System.out.println("[Init] Creating GyroIONavX");
     gyro = new Pigeon2(GyroConstants.CAN_ID);
-    gyro.setYaw(GyroConstants.HEADING_OFFSET_DEGREES);
+    gyro.setYaw(GyroConstants.AUTO_HEADING_OFFSET_DEGREES);
   }
 
   @Override
@@ -27,12 +28,23 @@ public class GyroIOPigeon implements GyroIO {
         new Rotation2d(Units.degreesToRadians(gyro.getPitch().getValueAsDouble()));
     // Value is Negative because NavX reads CW and everything else runs CCW
     inputs.yawPositionRad =
-        new Rotation2d(
-            Units.degreesToRadians(
-                gyro.getYaw().getValueAsDouble() + GyroConstants.HEADING_OFFSET_DEGREES));
+        RobotState.isAutonomous() == true
+            ? new Rotation2d(
+                Units.degreesToRadians(
+                    gyro.getYaw().getValueAsDouble() + GyroConstants.AUTO_HEADING_OFFSET_DEGREES))
+            : new Rotation2d(
+                Units.degreesToRadians(
+                    gyro.getYaw().getValueAsDouble()
+                        + GyroConstants.TELEOP_HEADING_OFFSET_DEGREES));
     inputs.anglePositionRad =
-        new Rotation2d(
-            Units.degreesToRadians(gyro.getAngle() + GyroConstants.HEADING_OFFSET_DEGREES));
+        RobotState.isAutonomous() == true
+            ? new Rotation2d(
+                Units.degreesToRadians(
+                    gyro.getYaw().getValueAsDouble() + GyroConstants.AUTO_HEADING_OFFSET_DEGREES))
+            : new Rotation2d(
+                Units.degreesToRadians(
+                    gyro.getYaw().getValueAsDouble()
+                        + GyroConstants.TELEOP_HEADING_OFFSET_DEGREES));
     inputs.rollVelocityRadPerSec =
         Units.degreesToRadians(
             gyro.getAngularVelocityYDevice()

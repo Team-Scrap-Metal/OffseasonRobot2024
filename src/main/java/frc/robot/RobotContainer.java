@@ -13,6 +13,8 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -22,6 +24,10 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.RobotStateConstants;
 import frc.robot.commands.AutoCommands.shootAuto;
+import frc.robot.commands.PathPlannerCommands.IntakeNote;
+import frc.robot.commands.TeleopCommands.shotRelease;
+import frc.robot.commands.TeleopCommands.shotSetUp;
+import frc.robot.commands.ZeroCommands.ZeroAll;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOKrakenNeo;
@@ -35,7 +41,9 @@ import frc.robot.subsystems.intake.IntakeIOCIM;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.ShooterIO;
 import frc.robot.subsystems.shooter.ShooterIONEO;
+import frc.robot.utils.PathPlanner;
 import frc.robot.utils.PoseEstimator;
+import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -50,6 +58,7 @@ public class RobotContainer {
   private final Shooter m_shooterSubsystem;
   private final Intake m_intakeSubsystem;
   private final PoseEstimator m_poseEstimator;
+  private final PathPlanner m_pathPlanner;
   // Controller
   private final CommandXboxController driverController =
       new CommandXboxController(OperatorConstants.DRIVER_PORT);
@@ -57,7 +66,7 @@ public class RobotContainer {
       new CommandXboxController(OperatorConstants.AUX_PORT);
 
   // Dashboard inputs
-  // private final LoggedDashboardChooser<Command> autoChooser;
+  private final LoggedDashboardChooser<Command> autoChooser;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -108,7 +117,28 @@ public class RobotContainer {
         break;
     }
 
+    NamedCommands.registerCommand("Intake", new IntakeNote(m_intakeSubsystem, 1.0));
+    NamedCommands.registerCommand(
+        "ShotSetUp", new shotSetUp(m_intakeSubsystem, m_shooterSubsystem));
+    NamedCommands.registerCommand("ShotRelease", new shotRelease(m_intakeSubsystem));
+    NamedCommands.registerCommand(
+        "ShotEnd", new InstantCommand(() -> m_shooterSubsystem.setBothSetpoint(0, 0)));
+
     m_poseEstimator = new PoseEstimator(m_driveSubsystem, m_gyroSubsystem);
+    m_pathPlanner = new PathPlanner(m_driveSubsystem, m_poseEstimator);
+
+    autoChooser = new LoggedDashboardChooser<>("Autos");
+    autoChooser.addDefaultOption("One Shot", new shootAuto(m_shooterSubsystem, m_intakeSubsystem));
+    // autoChooser.addOption("Straight", new PathPlannerAuto("Straight"));
+    // autoChooser.addOption("Strafe", new PathPlannerAuto("Strafe"));
+    // autoChooser.addOption("Straight and Rotate 90", new PathPlannerAuto("Straight and Rotate
+    // 90"));
+    // autoChooser.addOption("Strafe and Rotate", new PathPlannerAuto("Strafe and Rotate"));
+    // autoChooser.addOption("Strafe and Rotate", new PathPlannerAuto("Strafe and Rotate"));
+    // autoChooser.addOption("Straight Shoot", new PathPlannerAuto("Straight Shoot"));
+    autoChooser.addOption("One Piece Center", new PathPlannerAuto("One Piece Center"));
+    autoChooser.addOption("Two Piece Center", new PathPlannerAuto("Two Piece Center"));
+
     // Configure the button bindings
     configureDriverButtonBindings();
     configureAuxButtonBindings();
@@ -131,7 +161,7 @@ public class RobotContainer {
                     driverController.getLeftX() * 1, // Forward/backward
                     -driverController.getLeftY()
                         * 1, // Left/Right (multiply by -1 bc controller axis is inverted)
-                    driverController.getRightX() * (1)), // Rotate chassis left/right
+                    driverController.getRightX() * (-1)), // Rotate chassis left/right
             m_driveSubsystem));
 
     // Resets robot heading to be wherever the front of the robot is facing
@@ -156,25 +186,14 @@ public class RobotContainer {
   private void configureAuxButtonBindings() {
     /** Aux Controls */
     auxController
-        .rightBumper()
-        .onTrue(
-            new InstantCommand(() -> m_intakeSubsystem.setIntakePercent(1.0), m_intakeSubsystem))
-        .onFalse(
-            new InstantCommand(() -> m_intakeSubsystem.setIntakePercent(0), m_intakeSubsystem));
-    auxController
-        .leftBumper()
-        .onTrue(
-            new InstantCommand(() -> m_intakeSubsystem.setIntakePercent(-0.5), m_intakeSubsystem))
-        .onFalse(
-            new InstantCommand(() -> m_intakeSubsystem.setIntakePercent(0), m_intakeSubsystem));
+        .a()
+        .onTrue(new shotRelease(m_intakeSubsystem))
+        .onFalse(new ZeroAll(m_intakeSubsystem, m_shooterSubsystem));
 
     auxController
         .leftTrigger()
-        .onTrue(
-            new InstantCommand(
-                () -> m_shooterSubsystem.setBothSetpoint(3000, 4000), m_shooterSubsystem))
-        .onFalse(
-            new InstantCommand(() -> m_shooterSubsystem.setBothSetpoint(0, 0), m_shooterSubsystem));
+        .onTrue(new shotSetUp(m_intakeSubsystem, m_shooterSubsystem))
+        .onFalse(new ZeroAll(m_intakeSubsystem, m_shooterSubsystem));
   }
 
   public void stopEverything() {
@@ -188,7 +207,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new shootAuto(m_shooterSubsystem, m_intakeSubsystem);
-    // autoChooser.get();
+    return autoChooser.get();
   }
 }
