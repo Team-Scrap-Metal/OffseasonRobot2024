@@ -24,10 +24,13 @@ public class PoseEstimator extends SubsystemBase {
    */
   public static Vector<N3> stateStandardDevs = VecBuilder.fill(0.1, 0.1, 0.1);
 
+  public static Vector<N3> visionStandardDevs = VecBuilder.fill(.5, .5, 9999999);
+
   private SwerveDrivePoseEstimator poseEstimator;
   private Drive drive;
   private Gyro gyro;
   private Field2d field2d;
+  private LimelightHelpers.PoseEstimate mt1;
 
   public PoseEstimator(Drive drive, Gyro gyro) {
 
@@ -41,7 +44,20 @@ public class PoseEstimator extends SubsystemBase {
             new SwerveDriveKinematics(DriveConstants.getModuleTranslations()),
             gyro.getYaw(),
             drive.getSwerveModulePositions(),
-            new Pose2d(new Translation2d(), new Rotation2d()));
+            new Pose2d(new Translation2d(), new Rotation2d()),
+            stateStandardDevs,
+            visionStandardDevs);
+
+    mt1 = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
+    // LimelightHelpers.setCameraPose_RobotSpace(
+    //     "",
+    //     0.5, // Forward offset (meters)
+    //     0.0, // Side offset (meters)
+    //     0.5, // Height offset (meters)
+    //     0.0, // Roll (degrees)
+    //     30.0, // Pitch (degrees)
+    //     0.0 // Yaw (degrees)
+    //     );
   }
 
   @Override
@@ -51,6 +67,16 @@ public class PoseEstimator extends SubsystemBase {
     field2d.setRobotPose(getCurrentPose2d());
     poseEstimator.updateWithTime(
         Timer.getFPGATimestamp(), drive.getRotation(), drive.getSwerveModulePositions());
+
+    // System.out.println(mt1.tagCount);
+    // System.out.println(mt1.pose);
+
+    mt1 = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
+    if (mt1.tagCount > 0) {
+      poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(0, 0, 0));
+      poseEstimator.addVisionMeasurement(mt1.pose, mt1.timestampSeconds);
+      // System.out.println("running");
+    }
   }
 
   /**
