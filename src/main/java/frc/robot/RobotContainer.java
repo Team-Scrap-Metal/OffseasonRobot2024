@@ -158,15 +158,15 @@ public class RobotContainer {
         new RunCommand(
             () ->
                 m_driveSubsystem.driveWithDeadband(
-                    driverController.getLeftX() * .1, // Forward/backward
+                    driverController.getLeftX() * .25, // Forward/backward
                     -driverController.getLeftY()
-                        * 0.1, // Left/Right (multiply by -1 bc controller axis is inverted)
-                    driverController.getRightX() * (-0.1)), // Rotate chassis left/right
+                        * 0.25, // Left/Right (multiply by -1 bc controller axis is inverted)
+                    driverController.getRightX() * (-0.25)), // Rotate chassis left/right
             m_driveSubsystem));
 
     // Resets robot heading to be wherever the front of the robot is facing
     driverController
-        .a()
+        .x()
         .onTrue(new InstantCommand(() -> m_driveSubsystem.updateHeading(), m_driveSubsystem));
 
     driverController
@@ -185,13 +185,13 @@ public class RobotContainer {
 
   private void configureAuxButtonBindings() {
     /** Aux Controls */
-    auxController
+    driverController
         .a()
         .onTrue(new shotRelease(m_intakeSubsystem))
         .onFalse(new ZeroAll(m_intakeSubsystem, m_shooterSubsystem));
 
-    auxController
-        .leftTrigger()
+    driverController
+        .leftBumper()
         .onTrue(new shotSetUp(m_intakeSubsystem, m_shooterSubsystem))
         .onFalse(new ZeroAll(m_intakeSubsystem, m_shooterSubsystem));
   }
