@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.RobotStateConstants;
 import frc.robot.commands.AutoCommands.shootAuto;
+import frc.robot.commands.LimelightTestCommands.DriveToVisionTarget;
 import frc.robot.commands.PathPlannerCommands.IntakeNote;
 import frc.robot.commands.TeleopCommands.shotRelease;
 import frc.robot.commands.TeleopCommands.shotSetUp;
@@ -53,7 +54,7 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
  */
 public class RobotContainer {
   // Subsystems
-  private final Drive m_driveSubsystem;
+  public final Drive m_driveSubsystem;
   private final Gyro m_gyroSubsystem;
   private final Shooter m_shooterSubsystem;
   private final Intake m_intakeSubsystem;
@@ -181,6 +182,8 @@ public class RobotContainer {
             new InstantCommand(() -> m_intakeSubsystem.setIntakePercent(-0.5), m_intakeSubsystem))
         .onFalse(
             new InstantCommand(() -> m_intakeSubsystem.setIntakePercent(0), m_intakeSubsystem));
+
+    driverController.x().onTrue(new DriveToVisionTarget(m_driveSubsystem, 0));
   }
 
   private void configureAuxButtonBindings() {
